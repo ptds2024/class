@@ -4,10 +4,10 @@
     <title>Programming Tools in Data Science</title>
     <meta charset="utf-8" />
     <meta name="author" content="Samuel Orso" />
-    <meta name="date" content="2023-09-28" />
-    <script src="lecture01_files/header-attrs-2.22/header-attrs.js"></script>
+    <meta name="date" content="2024-09-26" />
+    <script src="lecture01_files/header-attrs-2.25/header-attrs.js"></script>
     <link href="lecture01_files/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <script src="lecture01_files/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+    <script src="lecture01_files/htmlwidgets-1.6.4/htmlwidgets.js"></script>
     <script src="lecture01_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
     <link href="lecture01_files/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
     <script src="lecture01_files/leaflet-1.3.1/leaflet.js"></script>
@@ -45,7 +45,7 @@ class: center, middle, inverse, title-slide
 ### Samuel Orso
 ]
 .date[
-### 28 September 2023
+### 26 September 2024
 ]
 
 ---
@@ -82,6 +82,74 @@ src="https://www.youtube.com/embed/Tzin1DgexlE"&gt;
 # General goals
 &lt;img src="images/diagram.png" width="593" height="459" style="display: block; margin: auto;" /&gt;
 
+
+---
+# Brief histo`R`y
+* `R` is a language and environment for statistical computing and graphics;
+* It was developed around 1995 by Ross Ihaka and Robert Gentleman at the University of Auckland, as an alternative implementation of the basic `S` language developed by John Chambers and colleagues;
+* Oldest release (available) is version 0.49 (1997-04-23)
+
+&lt;img src="images/extending_r.png" width="267" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Main featu`R`es
+* Much code written for `S` runs unaltered under `R`;
+* `R` provides a variety of statistical and graphical techniques;
+* `R` is popular for data science (in competition with Python);
+* `R` is open-source;
+* `R` is an interpreted language;
+* `R` is highly extensible via packages (more than 20,000 available on CRAN); 
+* `R` can be interfaced with other languages (C++, Fortran, ...).
+
+---
+# `R` is an interpreted language
+&lt;img src="images/cartoon_programming.png" width="551" style="display: block; margin: auto;" /&gt;
+
+---
+# Compiled program
+
+- Program is translated into native machine instruction (compilation)
+
+&lt;img src="images/compiled.png" width="750" height="111" style="display: block; margin: auto;" /&gt;
+
+&amp;nbsp;
+
+&amp;nbsp;
+
+&amp;nbsp;
+
+&lt;img src="images/compiled_pl.png" width="750" height="117" style="display: block; margin: auto;" /&gt;
+
+---
+# Interpreted program
+
+- Program is translated into another code (bytecode). An interpreter then performs the required actions.
+
+&lt;img src="images/interpreted.png" width="750" height="111" style="display: block; margin: auto;" /&gt;
+
+&amp;nbsp;
+
+&amp;nbsp;
+
+&amp;nbsp;
+
+&lt;img src="images/interpreted_pl.png" width="750" height="117" style="display: block; margin: auto;" /&gt;
+
+---
+# `R` interfaces to other languages
+`R` is basically written in `C` and `Fortran`. Available interfaces to other languages comprise:
+- `C` via `.Call()` function
+- `Fortran` via `.Fortran()` function
+- `C++` via the `Rcpp` package
+- `Python` via `reticulate`, `rPython`, `rJython` or `XRPython`
+- `Julia` via `XRJulia`
+- `JavaScript` via `V8`
+- `Excel`, `JSON`, `SQL`, `Perl`, ...
+
+
+See Chambers, (2017) for a comprehensive discussion on interfacing `R`.
+
 ---
 class: sydney-blue, center, middle
 # Course logistic and expectation
@@ -91,8 +159,8 @@ class: sydney-blue, center, middle
 ## Location and time
 .pull-left[
 .scroll-box-5[
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-88f994451de76f0cd512" style="width:504px;height:504px;"></div>
-<script type="application/json" data-for="htmlwidget-88f994451de76f0cd512">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]}],"setView":[[46.52356,6.58455],17,[]]},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-2808bfeb8aa71fdb0eb9" style="width:504px;height:504px;"></div>
+<script type="application/json" data-for="htmlwidget-2808bfeb8aa71fdb0eb9">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]}],"setView":[[46.52356,6.58455],17,[]]},"evals":[],"jsHooks":[]}</script>
 ]]
 
 .pull-right[
@@ -102,30 +170,30 @@ class: sydney-blue, center, middle
 * Verify the schedule on the course website.
 ]]
 
----
-## Ideal schedule (every Thursday 9 to 12)    
-| Week | Date | Topic | Instructor |   
-|---|---|---|---|   
-| 2 | 28 Sept | Introduction, RMarkdown, Github | Samuel |
-| 3 | 5 Oct | Exercise and Homework 1, Project-oriented workflow | Aleksandr |
-| 4 | 12 Oct | Data structures, Control structures | Samuel |
-| 5 | 19 Oct | Exercise and Homework 2, R coding style guide | Aleksandr |
-| 6 | 26 Oct | Function I, Project Proposal, Webscraping | Samuel | 
-| 7 | 2 Nov | Exercise and Homework 3 | Aleksandr |
-| 8 | 9 Nov| Function II, Shiny App I | Samuel |
-| 9 | 16 Nov | Exercise and Homework 4 | Aleksandr |
-| 10 | 23 Nov | R-pkg | Samuel |
-| 11 | 30 Nov | Group Project | Aleksandr | 
-| 12 | 7 Dec |  Shiny app II, Project | Samuel |
-| 13 | 14 Dec | Group project | Aleksandr | 
-| 14 | 21 Dec | Project Presentations | Samuel and Aleksandr | 
+&lt;!-- --- --&gt;
+&lt;!-- ## Ideal schedule (every Thursday 9 to 12)     --&gt;
+&lt;!-- | Week | Date | Topic | Instructor |    --&gt;
+&lt;!-- |---|---|---|---|    --&gt;
+&lt;!-- | 2 | 28 Sept | Introduction, RMarkdown, Github | Samuel | --&gt;
+&lt;!-- | 3 | 5 Oct | Exercise and Homework 1, Project-oriented workflow | Aleksandr | --&gt;
+&lt;!-- | 4 | 12 Oct | Data structures, Control structures | Samuel | --&gt;
+&lt;!-- | 5 | 19 Oct | Exercise and Homework 2, R coding style guide | Aleksandr | --&gt;
+&lt;!-- | 6 | 26 Oct | Function I, Project Proposal, Webscraping | Samuel |  --&gt;
+&lt;!-- | 7 | 2 Nov | Exercise and Homework 3 | Aleksandr | --&gt;
+&lt;!-- | 8 | 9 Nov| Function II, Shiny App I | Samuel | --&gt;
+&lt;!-- | 9 | 16 Nov | Exercise and Homework 4 | Aleksandr | --&gt;
+&lt;!-- | 10 | 23 Nov | R-pkg | Samuel | --&gt;
+&lt;!-- | 11 | 30 Nov | Group Project | Aleksandr |  --&gt;
+&lt;!-- | 12 | 7 Dec |  Shiny app II, Project | Samuel | --&gt;
+&lt;!-- | 13 | 14 Dec | Group project | Aleksandr |  --&gt;
+&lt;!-- | 14 | 21 Dec | Project Presentations | Samuel and Aleksandr |  --&gt;
 
 ---
 # Course logistic and expectation
 ## Requirements
 
 * No IT background is assumed from the students but a strong will to learn useful and practical programming skills (Data Science in Business Analytics)
-* Willing to work and collaborate in groups (4~6 people)
+* Willing to work and collaborate in groups (4~6 groups)
 * Be ready to struggle with your computer!
 &lt;center&gt;&lt;img src="https://media.giphy.com/media/bPCwGUF2sKjyE/giphy.gif" alt="gif"/&gt;&lt;/center&gt;
 
@@ -140,11 +208,10 @@ Type | Points
 Semester project | 30 
 Homeworks | 30 
 
-* 4 homeworks in groups of 7.5 points (**penalty for late submission**).
-* The first homework is with your group.
-* Homeworks 2, 3, 4 are individuals (we verify for code duplicates!).
+* 3 homeworks (individual) of 10 points (**penalty for late submission**).
+* 1 group project of 30 points.
 * No final examination for this class.
-* Final presentation of project last day of class (21st Dec).
+* Final presentation of project last day of class (19 Dec).
 
 ---
 # Course logistic and expectation
@@ -165,7 +232,7 @@ The group project comprises:
 * We use &lt;img src="images/slack.png" width="200px"/&gt; to communicate and many more
 * We use the **NEIN rule**! (No Email, only If Necessary)
 * More info at [https://ptds.samorso.ch/](https://ptds.samorso.ch/)
-* To access slack: register at [https://tinyurl.com/ptds2023](https://forms.gle/9EzB7J5mzNkYgCtv7) and wait your invitation.
+* To access slack, you need to register and wait for your invitation.
 
 ---
 ## Take 3 minutes to complete the form
@@ -181,7 +248,7 @@ class: sydney-blue, center, middle
 .white[&lt;svg viewBox="0 0 384 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM332.1 128H256V51.9l76.1 76.1zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288H48z"&gt;&lt;/path&gt;&lt;/svg&gt; website]
 &lt;/a&gt;
 
-&lt;a href="https://github.com/ptds2023/"&gt;
+&lt;a href="https://github.com/ptds2024/"&gt;
 .white[&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; GitHub]
 &lt;/a&gt;
 ]

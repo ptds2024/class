@@ -2,7 +2,7 @@
 title: "Programming Tools in Data Science"
 subtitle: "Lecture #6: Function"
 author: "Samuel Orso"
-date: "12 October 2023"
+date: "3 October 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
@@ -481,43 +481,43 @@ class: sydney-blue, center, middle
 .white[`r icons::fontawesome("file")` website]
 </a>
 
-<a href="https://github.com/ptds2023/">
+<a href="https://github.com/ptds2024/">
 .white[`r icons::fontawesome("github")` GitHub]
 </a>
 ]
 
----
-# Exercise
-* What does the following code return?
-```{r, eval=F}
-x <- 2
-f1 <- function(x) {
-  function() {
-    x + 3
-  }
-}
-f1(1)()
-```
+<!-- --- -->
+<!-- # Exercise -->
+<!-- * What does the following code return? -->
+<!-- ```{r, eval=F} -->
+<!-- x <- 2 -->
+<!-- f1 <- function(x) { -->
+<!--   function() { -->
+<!--     x + 3 -->
+<!--   } -->
+<!-- } -->
+<!-- f1(1)() -->
+<!-- ``` -->
 
-* How would you usually write these codes?
-```{r, eval=F}
-`+`(1, `*`(2, 3))
-`*`(3, `+`(2, 1))
-```
+<!-- * How would you usually write these codes? -->
+<!-- ```{r, eval=F} -->
+<!-- `+`(1, `*`(2, 3)) -->
+<!-- `*`(3, `+`(2, 1)) -->
+<!-- ``` -->
 
-* How could you make this function call easier to read?
-```{r, eval=F}
-mean(, TRUE, x = c(seq(10), rep(NA,3)))
-```
+<!-- * How could you make this function call easier to read? -->
+<!-- ```{r, eval=F} -->
+<!-- mean(, TRUE, x = c(seq(10), rep(NA,3))) -->
+<!-- ``` -->
 
----
-* Does the following code throw an error when executed? Why or why not?
-```{r, eval=F}
-f2 <- function(a, b) {
-  a * 3
-}
-f2(3, stop("This is an error!"))
-f2(stop("This is an error!"), 3)
-```
+<!-- --- -->
+<!-- * Does the following code throw an error when executed? Why or why not? -->
+<!-- ```{r, eval=F} -->
+<!-- f2 <- function(a, b) { -->
+<!--   a * 3 -->
+<!-- } -->
+<!-- f2(3, stop("This is an error!")) -->
+<!-- f2(stop("This is an error!"), 3) -->
+<!-- ``` -->
 
-* Propose an infix function.
+<!-- * Propose an infix function. -->

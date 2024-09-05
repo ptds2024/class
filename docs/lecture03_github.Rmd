@@ -2,7 +2,7 @@
 title: "Programming Tools in Data Science"
 subtitle: "Lecture #3: GitHub"
 author: "Samuel Orso"
-date: "28 September 2023"
+date: "26 September 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
@@ -268,17 +268,17 @@ class: sydney-blue, center, middle
 .white[`r icons::fontawesome("file")` website]
 </a>
 
-<a href="https://github.com/ptds2023/">
+<a href="https://github.com/ptds2024/">
 .white[`r icons::fontawesome("github")` GitHub]
 </a>
 ]
 
----
-# In-class exercise (10 minutes)
-1. Create a GitHub repo for the RMarkdown file (.Rmd) you created in the last class.
-1. Edit the README.md file, push the .Rmd.
-1. By two. Invite (person A) someone else (person B) to work on your repo and try:
-  - Repo is up-to-date. Person B modifies .Rmd and pushes the changes, person A pulls the changes.
-  - Repo is up-to-date. Person A modifies 1st section of .Rmd, person B modifies 2nd section (no conflict) of .Rmd. No push, no pull in between. Now person A commits and pushes. Then person B tries to commit and push. Try to solve until repo is up-to-date.
-  - Same as last point, but person B modifies 1st section of .Rmd (conflict).
-1. (optional) Complete the exercise "The Basics of Github" (you need to register at https://tinyurl.com/ptds2023 and wait for an invitation).
+<!-- --- -->
+<!-- # Exercises -->
+<!-- 1. Create a GitHub repo for the RMarkdown file (.Rmd) you created in the last class. -->
+<!-- 1. Edit the README.md file, push the .Rmd. -->
+<!-- 1. By two. Invite (person A) someone else (person B) to work on your repo and try: -->
+<!--   - Repo is up-to-date. Person B modifies .Rmd and pushes the changes, person A pulls the changes. -->
+<!--   - Repo is up-to-date. Person A modifies 1st section of .Rmd, person B modifies 2nd section (no conflict) of .Rmd. No push, no pull in between. Now person A commits and pushes. Then person B tries to commit and push. Try to solve until repo is up-to-date. -->
+<!--   - Same as last point, but person B modifies 1st section of .Rmd (conflict). -->
+<!-- 1. (optional) Complete the exercise "The Basics of Github". -->

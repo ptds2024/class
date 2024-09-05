@@ -2,7 +2,7 @@
 title: "Programming Tools in Data Science"
 subtitle: "Lecture #2: RMarkdown"
 author: "Samuel Orso"
-date: "28 September 2023"
+date: "26 September 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
@@ -197,31 +197,31 @@ class: sydney-blue, center, middle
 .white[`r icons::fontawesome("file")` website]
 </a>
 
-<a href="https://github.com/ptds2023/">
+<a href="https://github.com/ptds2024/">
 .white[`r icons::fontawesome("github")` GitHub]
 </a>
 ]
 
----
-# In-class exercise (10 minutes)
-Basic manipulations:
-1. Create a RMarkdown HTML document in `RStudio` and "`knit`" it.
-1. Create a new header of type 2.
-1. Make a linear regression with "Sepal Length" as a response and 
-"Sepal Width" as an explanatory variable from the `iris` dataset and save the result. 
-1. Highlight the code with `monochrome` style.
-1. Print the summary of the linear regression.
-1. Include the QQplot from the linear regression. Change to filled dots.
-1. Print the head of the `iris` dataset with `kable`.
-1. Remove the `.` from the labels (click [here](https://bookdown.org/yihui/rmarkdown-cookbook/kable.html#change-column-names)).
+<!-- --- -->
+<!-- # Exercises -->
+<!-- Basic manipulations: -->
+<!-- 1. Create a RMarkdown HTML document in `RStudio` and "`knit`" it. -->
+<!-- 1. Create a new header of type 2. -->
+<!-- 1. Make a linear regression with "Sepal Length" as a response and  -->
+<!-- "Sepal Width" as an explanatory variable from the `iris` dataset and save the result.  -->
+<!-- 1. Highlight the code with `monochrome` style. -->
+<!-- 1. Print the summary of the linear regression. -->
+<!-- 1. Include the QQplot from the linear regression. Change to filled dots. -->
+<!-- 1. Print the head of the `iris` dataset with `kable`. -->
+<!-- 1. Remove the `.` from the labels (click [here](https://bookdown.org/yihui/rmarkdown-cookbook/kable.html#change-column-names)). -->
 
----
-# In-class exercise (10 minutes)
-More advanced manipulations:
-1. Install `kableExtra`. And perform the examples shown in the slides with `iris` dataset.
-1. Using Mathpix, reproduce equation (6.1) of the paper [https://arxiv.org/abs/math/0303109](https://arxiv.org/abs/math/0303109)
-1. Add the Reference and cite it in the RMarkdown.
-1. Recreate your RMarkdown into a Quarto document.
+<!-- --- -->
+<!-- # Exercises -->
+<!-- More advanced manipulations: -->
+<!-- 1. Install `kableExtra`. And perform the examples shown in the slides with `iris` dataset. -->
+<!-- 1. Using Mathpix, reproduce equation (6.1) of the paper [https://arxiv.org/abs/math/0303109](https://arxiv.org/abs/math/0303109) -->
+<!-- 1. Add the Reference and cite it in the RMarkdown. -->
+<!-- 1. Recreate your RMarkdown into a Quarto document. -->
 
 ---
 # To go further

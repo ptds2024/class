@@ -2,7 +2,7 @@
 title: "Programming Tools in Data Science"
 subtitle: "Lecture #4: Data Structure"
 author: "Samuel Orso"
-date: "12 October 2023"
+date: "3 October 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
@@ -25,85 +25,6 @@ output:
 ```{r, echo=FALSE, fig.align="center"}
 knitr::include_graphics(path = "images/r_programming.png")
 ```
-
----
-# Brief histo`R`y
-* `R` is a language and environment for statistical computing and graphics;
-* It was developed around 1995 by Ross Ihaka and Robert Gentleman at the University of Auckland, as an alternative implementation of the basic `S` language developed by John Chambers and colleagues;
-* Oldest release (available) is version 0.49 (1997-04-23)
-
-```{r,echo=FALSE,fig.align='center'}
-knitr::include_graphics(path="images/extending_r.png")
-```
-
-
----
-# Main featu`R`es
-* Much code written for `S` runs unaltered under `R`;
-* `R` provides a variety of statistical and graphical techniques;
-* `R` is popular for data science (in competition with Python);
-* `R` is open-source;
-* `R` is an interpreted language;
-* `R` is highly extensible via packages (19885 available on CRAN in September 2023); 
-* `R` can be interfaced with other languages (C++, Fortran, ...).
-
----
-# `R` is an interpreted language
-```{r, echo=FALSE, fig.align="center"}
-knitr::include_graphics(path = "images/cartoon_programming.png")
-```
-
----
-# Compiled program
-
-- Program is translated into native machine instruction (compilation)
-
-```{r echo=FALSE, fig.align='center', out.width=750, out.height=111}
-knitr::include_graphics("images/compiled.png")
-```
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-```{r echo=FALSE, fig.align='center', out.width=750, out.height=117}
-knitr::include_graphics("images/compiled_pl.png")
-```
-
----
-# Interpreted program
-
-- Program is translated into another code (bytecode). An interpreter then performs the required actions.
-
-```{r echo=FALSE, fig.align='center', out.width=750, out.height=111}
-knitr::include_graphics("images/interpreted.png")
-```
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-```{r echo=FALSE, fig.align='center', out.width=750, out.height=117}
-knitr::include_graphics("images/interpreted_pl.png")
-```
-
----
-# `R` interfaces to other languages
-`R` is basically written in `C` and `Fortran`. Available interfaces to other languages comprise:
-- `C` via `.Call()` function
-- `Fortran` via `.Fortran()` function
-- `C++` via the `Rcpp` package
-- `Python` via `reticulate`, `rPython`, `rJython` or `XRPython`
-- `Julia` via `XRJulia`
-- `JavaScript` via `V8`
-- `Excel`, `JSON`, `SQL`, `Perl`, ...
-
-
-See Chambers, (2017) for a comprehensive discussion on interfacing `R`.
 
 ---
 # Example: linear regression
@@ -616,23 +537,23 @@ tibble(x = rnorm(1e3), y = rexp(1e3))
 
 
 
----
-# Exercise
-Using the following code:
-```{r, eval=F}
-set.seed(1)
-A <- matrix(rnorm(20), ncol = 2)
-B <- matrix(rnorm(20), ncol = 2)
-```
-1. What are the dimensions of $A$ and $B$? Compute $A^TB$ and $AB^T$.
-2. Combine $A$ and $B$ row-wise to create $C$.
-3. Let $D$ be a copy of $C$ centered around the mean
-columnwise.
-The unbiased estimator of the covariance matrix of
-$C$ is defined as $$\frac{1}{n-1}D^TD,$$
-where $n$ is the number of rows of $D$.
-Compute this quantity.
-Compare with `cov(C)`.
+<!-- --- -->
+<!-- # Exercise -->
+<!-- Using the following code: -->
+<!-- ```{r, eval=F} -->
+<!-- set.seed(1) -->
+<!-- A <- matrix(rnorm(20), ncol = 2) -->
+<!-- B <- matrix(rnorm(20), ncol = 2) -->
+<!-- ``` -->
+<!-- 1. What are the dimensions of $A$ and $B$? Compute $A^TB$ and $AB^T$. -->
+<!-- 2. Combine $A$ and $B$ row-wise to create $C$. -->
+<!-- 3. Let $D$ be a copy of $C$ centered around the mean -->
+<!-- columnwise. -->
+<!-- The unbiased estimator of the covariance matrix of -->
+<!-- $C$ is defined as $$\frac{1}{n-1}D^TD,$$ -->
+<!-- where $n$ is the number of rows of $D$. -->
+<!-- Compute this quantity. -->
+<!-- Compare with `cov(C)`. -->
 
 ---
 # To go further
@@ -649,7 +570,7 @@ class: sydney-blue, center, middle
 .white[`r icons::fontawesome("file")` website]
 </a>
 
-<a href="https://github.com/ptds2023/">
+<a href="https://github.com/ptds2024/">
 .white[`r icons::fontawesome("github")` GitHub]
 </a>
 ]
