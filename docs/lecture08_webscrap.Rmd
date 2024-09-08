@@ -2,7 +2,7 @@
 title: "Programming Tools in Data Science"
 subtitle: "Lecture #8: Webscraping "
 author: "Samuel Orso"
-date: "26 October 2023"
+date: "17 October 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
@@ -861,12 +861,12 @@ class: sydney-blue, center, middle
 </a>
 ]
 
----
-# Exercises
-1. Play with [CSS Diner](https://flukeout.github.io/) to get familiar with CSS Selectors.
-2. Follow this [workflow](https://smac-group.github.io/ds/section-web-scraping.html#section-workflow). It uses the _SelectorGadget_. Propose an alternative solution using CSS selectors. You will probably need to use the developer tools of your browser.
-3. Repeat exercise 2. using `RSelenium` or `chromote`. 
-4. Extract the information from the World bank data example using regular expressions. 
+<!-- --- -->
+<!-- # Exercises -->
+<!-- 1. Play with [CSS Diner](https://flukeout.github.io/) to get familiar with CSS Selectors. -->
+<!-- 2. Follow this [workflow](https://smac-group.github.io/ds/section-web-scraping.html#section-workflow). It uses the _SelectorGadget_. Propose an alternative solution using CSS selectors. You will probably need to use the developer tools of your browser. -->
+<!-- 3. Repeat exercise 2. using `RSelenium` or `chromote`.  -->
+<!-- 4. Extract the information from the World bank data example using regular expressions.  -->
 
 ---
 # To go further

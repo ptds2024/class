@@ -4,8 +4,8 @@
     <title>Programming Tools in Data Science</title>
     <meta charset="utf-8" />
     <meta name="author" content="Samuel Orso" />
-    <meta name="date" content="2023-10-26" />
-    <script src="lecture07_OOP_files/header-attrs-2.22/header-attrs.js"></script>
+    <meta name="date" content="2024-10-17" />
+    <script src="lecture07_OOP_files/header-attrs-2.25/header-attrs.js"></script>
     <link href="lecture07_OOP_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -36,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Samuel Orso
 ]
 .date[
-### 26 October 2023
+### 17 October 2024
 ]
 
 ---
@@ -159,7 +159,7 @@ summary
 ```
 ## function (object, ...) 
 ## UseMethod("summary")
-## &lt;bytecode: 0x56324a850a78&gt;
+## &lt;bytecode: 0x560e1d8b5cd0&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -400,7 +400,7 @@ plot
 ```
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## &lt;bytecode: 0x56324dda5040&gt;
+## &lt;bytecode: 0x560e20a62988&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -445,45 +445,42 @@ plot(image, col = cm.colors(256), xlab = "x axis", ylab = "y axis")
 * More details and examples in the book [An Introduction to Statistical Programming Methods with R](https://smac-group.github.io/ds/section-functions.html)
 * More advanced remarks in [Advanced R](https://adv-r.hadley.nz/index.html), Chapters 6, 7 and 8 for functions, Chapters 12 to 16 for object-oriented programming. More specifically, other OO paradigms (S4, R6) are presented.
 
----
-# Exercises 
-1. Create a `summary` function for the class `pixel`. Verify the dispatch before and after implementing the summary function.
-2. Describe the difference between `t.test()` and `t.data.frame()`. What happens if you run the following code and why?
-    
-    ```r
-    x &lt;- structure(1:10, class = "test")
-    t(x)
-    ```
+&lt;!-- --- --&gt;
+&lt;!-- # Exercises  --&gt;
+&lt;!-- 1. Create a `summary` function for the class `pixel`. Verify the dispatch before and after implementing the summary function. --&gt;
+&lt;!-- 2. Describe the difference between `t.test()` and `t.data.frame()`. What happens if you run the following code and why? --&gt;
+&lt;!--     ```{r, eval=F} --&gt;
+&lt;!--     x &lt;- structure(1:10, class = "test") --&gt;
+&lt;!--     t(x) --&gt;
+&lt;!--     ``` --&gt;
 
----
-&lt;ol start="3"&gt; 
-&lt;li&gt;Read the documentation for &lt;code class="remark-inline-code"&gt;UseMethod()&lt;/code&gt; and explain why the following code returns the results that it does.&lt;/li&gt;&lt;/ol&gt;
+&lt;!-- --- --&gt;
+&lt;!-- &lt;ol start="3"&gt;  --&gt;
+&lt;!-- &lt;li&gt;Read the documentation for &lt;code class="remark-inline-code"&gt;UseMethod()&lt;/code&gt; and explain why the following code returns the results that it does.&lt;/li&gt;&lt;/ol&gt; --&gt;
+&lt;!-- ```{r, eval=F} --&gt;
+&lt;!-- g &lt;- function(x) { --&gt;
+&lt;!--   x &lt;- 10 --&gt;
+&lt;!--   y &lt;- 10 --&gt;
+&lt;!--   UseMethod("g") --&gt;
+&lt;!-- } --&gt;
+&lt;!-- g.default &lt;- function(x) c(x = x, y = y) --&gt;
 
-```r
-g &lt;- function(x) {
-  x &lt;- 10
-  y &lt;- 10
-  UseMethod("g")
-}
-g.default &lt;- function(x) c(x = x, y = y)
+&lt;!-- x &lt;- 1 --&gt;
+&lt;!-- y &lt;- 1 --&gt;
+&lt;!-- g(y) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- &lt;ol start="4"&gt;&lt;li&gt; What do you expect this code to return? What does it actually return and why?&lt;/li&gt;&lt;/ol&gt; --&gt;
+&lt;!-- ```{r, eval=F} --&gt;
+&lt;!-- generic2 &lt;- function(x) UseMethod("generic2") --&gt;
+&lt;!-- generic2.a1 &lt;- function(x) "a1" --&gt;
+&lt;!-- generic2.a2 &lt;- function(x) "a2" --&gt;
+&lt;!-- generic2.b &lt;- function(x) { --&gt;
+&lt;!--   class(x) &lt;- "a1" --&gt;
+&lt;!--   NextMethod() --&gt;
+&lt;!-- } --&gt;
 
-x &lt;- 1
-y &lt;- 1
-g(y)
-```
-&lt;ol start="4"&gt;&lt;li&gt; What do you expect this code to return? What does it actually return and why?&lt;/li&gt;&lt;/ol&gt;
-
-```r
-generic2 &lt;- function(x) UseMethod("generic2")
-generic2.a1 &lt;- function(x) "a1"
-generic2.a2 &lt;- function(x) "a2"
-generic2.b &lt;- function(x) {
-  class(x) &lt;- "a1"
-  NextMethod()
-}
-
-generic2(structure(list(), class = c("b", "a2")))
-```
+&lt;!-- generic2(structure(list(), class = c("b", "a2"))) --&gt;
+&lt;!-- ``` --&gt;
 
 ---
 class: sydney-blue, center, middle
@@ -495,7 +492,7 @@ class: sydney-blue, center, middle
 .white[&lt;svg viewBox="0 0 384 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM332.1 128H256V51.9l76.1 76.1zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288H48z"&gt;&lt;/path&gt;&lt;/svg&gt; website]
 &lt;/a&gt;
 
-&lt;a href="https://github.com/ptds2023/"&gt;
+&lt;a href="https://github.com/ptds2024/"&gt;
 .white[&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; GitHub]
 &lt;/a&gt;
 ]

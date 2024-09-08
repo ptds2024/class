@@ -2,7 +2,7 @@
 title: "Programming Tools in Data Science"
 subtitle: "Lecture #7: Object-oriented programming"
 author: "Samuel Orso"
-date: "26 October 2023"
+date: "17 October 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
@@ -214,42 +214,42 @@ plot(image, col = cm.colors(256), xlab = "x axis", ylab = "y axis")
 * More details and examples in the book [An Introduction to Statistical Programming Methods with R](https://smac-group.github.io/ds/section-functions.html)
 * More advanced remarks in [Advanced R](https://adv-r.hadley.nz/index.html), Chapters 6, 7 and 8 for functions, Chapters 12 to 16 for object-oriented programming. More specifically, other OO paradigms (S4, R6) are presented.
 
----
-# Exercises 
-1. Create a `summary` function for the class `pixel`. Verify the dispatch before and after implementing the summary function.
-2. Describe the difference between `t.test()` and `t.data.frame()`. What happens if you run the following code and why?
-    ```{r, eval=F}
-    x <- structure(1:10, class = "test")
-    t(x)
-    ```
+<!-- --- -->
+<!-- # Exercises  -->
+<!-- 1. Create a `summary` function for the class `pixel`. Verify the dispatch before and after implementing the summary function. -->
+<!-- 2. Describe the difference between `t.test()` and `t.data.frame()`. What happens if you run the following code and why? -->
+<!--     ```{r, eval=F} -->
+<!--     x <- structure(1:10, class = "test") -->
+<!--     t(x) -->
+<!--     ``` -->
 
----
-<ol start="3"> 
-<li>Read the documentation for <code class="remark-inline-code">UseMethod()</code> and explain why the following code returns the results that it does.</li></ol>
-```{r, eval=F}
-g <- function(x) {
-  x <- 10
-  y <- 10
-  UseMethod("g")
-}
-g.default <- function(x) c(x = x, y = y)
+<!-- --- -->
+<!-- <ol start="3">  -->
+<!-- <li>Read the documentation for <code class="remark-inline-code">UseMethod()</code> and explain why the following code returns the results that it does.</li></ol> -->
+<!-- ```{r, eval=F} -->
+<!-- g <- function(x) { -->
+<!--   x <- 10 -->
+<!--   y <- 10 -->
+<!--   UseMethod("g") -->
+<!-- } -->
+<!-- g.default <- function(x) c(x = x, y = y) -->
 
-x <- 1
-y <- 1
-g(y)
-```
-<ol start="4"><li> What do you expect this code to return? What does it actually return and why?</li></ol>
-```{r, eval=F}
-generic2 <- function(x) UseMethod("generic2")
-generic2.a1 <- function(x) "a1"
-generic2.a2 <- function(x) "a2"
-generic2.b <- function(x) {
-  class(x) <- "a1"
-  NextMethod()
-}
+<!-- x <- 1 -->
+<!-- y <- 1 -->
+<!-- g(y) -->
+<!-- ``` -->
+<!-- <ol start="4"><li> What do you expect this code to return? What does it actually return and why?</li></ol> -->
+<!-- ```{r, eval=F} -->
+<!-- generic2 <- function(x) UseMethod("generic2") -->
+<!-- generic2.a1 <- function(x) "a1" -->
+<!-- generic2.a2 <- function(x) "a2" -->
+<!-- generic2.b <- function(x) { -->
+<!--   class(x) <- "a1" -->
+<!--   NextMethod() -->
+<!-- } -->
 
-generic2(structure(list(), class = c("b", "a2")))
-```
+<!-- generic2(structure(list(), class = c("b", "a2"))) -->
+<!-- ``` -->
 
 ---
 class: sydney-blue, center, middle
@@ -261,7 +261,7 @@ class: sydney-blue, center, middle
 .white[`r icons::fontawesome("file")` website]
 </a>
 
-<a href="https://github.com/ptds2023/">
+<a href="https://github.com/ptds2024/">
 .white[`r icons::fontawesome("github")` GitHub]
 </a>
 ]
