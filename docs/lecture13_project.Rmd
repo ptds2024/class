@@ -32,6 +32,41 @@ The project comprises
 2. A well documented and well organized **GitHub repository**.
 3. A `pkgdown` **website** showcasing your work and your package.
 
+
+---
+The project comprises
+1. A well formatted and complete **R-package** with a **shiny app**:
+  + Functions are documented with examples and tested.
+  + The app can be called from one of the package function.
+  + Data sets are placed in `data/` and wrangling steps in `data-raw/`.
+  + The package passes all the checks (both locally and on GitHub).
+  + There is at least one vignette showcasing the package/app.
+  + The package can seamlessly be installed from the GitHub repo.
+2. A well documented and well organized **GitHub repository**.
+3. A `pkgdown` **website** showcasing your work and your package.
+
+---
+The project comprises
+1. A well formatted and complete **R-package** with a **shiny app**.
+2. A well documented and well organized **GitHub repository**:
+  + The repo must be on the organization `ptds2023`.
+  + Edit the `README.md` to make the package as clear as possible.
+  + Comprehensive commit messages and clear issues (closed once done).
+  + Up-to-date GitHub projects that demonstrate your current organization for the project: TODOs, tasks in progress of resolution, tasks that have been completed.
+  + Clean repo: do not add unnecessary files to the repo.
+  + Put your presentation in a dedicated folder.
+  + 
+3. A `pkgdown` **website** showcasing your work and your package.
+
+---
+The project comprises
+1. A well formatted and complete **R-package** with a **shiny app**.
+2. A well documented and well organized **GitHub repository**.
+3. A `pkgdown` **website** showcasing your work and your package:
+  + Motivate the package and how to use it (think of using vignettes).
+  + Build automatically the website using GitHub action.
+
+
 ---
 class: sydney-blue, center, middle
 
@@ -40,12 +75,8 @@ class: sydney-blue, center, middle
 ---
 class: sydney-blue, center, middle
 
-# Examples of 2022
+# Examples from past classes
 
----
-class: sydney-blue, center, middle
-
-# Examples of 2021
 
 ---
 # HEC Time Table
@@ -58,11 +89,6 @@ knitr::include_graphics("images/timetable.png")
 ```{r,echo=FALSE,out.height="90%",out.width="90%",fig.align='center'}
 knitr::include_graphics("images/nestle.png")
 ```
-
----
-class: sydney-blue, center, middle
-
-# Examples of 2020
 
 ---
 # Nutrition calculator
@@ -113,7 +139,7 @@ Source of inspiration:
 * <https://connect.thinkr.fr/connect/>
 
 ---
-# Proposal
+# Optional: A Project Proposal
 To facilitate the organization of your project, we recommend that you submit a proposal during the semester. The proposal should be a 2-3 pages document that includes the following sections:
 1. **Goals and impacts**: describe briefly the rationale of your project, you overall objectives and potential impacts.   
 2. **Plan**: detail your approach and your specific objectives:
@@ -132,45 +158,6 @@ Gantt chart example
 knitr::include_graphics("images/gantt.png")
 ```
 
-
----
-The project comprises
-1. A well formatted and complete **R-package** with a **shiny app**.
-2. A well documented and well organized **GitHub repository**.
-3. A `pkgdown` **website** showcasing your work and your package.
-
----
-The project comprises
-1. A well formatted and complete **R-package** with a **shiny app**:
-  + Functions are documented with examples and tested.
-  + The app can be called from one of the package function.
-  + Data sets are placed in `data/` and wrangling steps in `data-raw/`.
-  + The package passes all the checks (both locally and on GitHub).
-  + There is at least one vignette showcasing the package/app.
-  + The package can seamlessly be installed from the GitHub repo.
-2. A well documented and well organized **GitHub repository**.
-3. A `pkgdown` **website** showcasing your work and your package.
-
----
-The project comprises
-1. A well formatted and complete **R-package** with a **shiny app**.
-2. A well documented and well organized **GitHub repository**:
-  + The repo must be on the organization `ptds2023`.
-  + Edit the `README.md` to make the package as clear as possible.
-  + Comprehensive commit messages and clear issues (closed once done).
-  + Up-to-date GitHub projects that demonstrate your current organization for the project: TODOs, tasks in progress of resolution, tasks that have been completed.
-  + Clean repo: do not add unnecessary files to the repo.
-  + Put your presentation in a dedicated folder.
-  + 
-3. A `pkgdown` **website** showcasing your work and your package.
-
----
-The project comprises
-1. A well formatted and complete **R-package** with a **shiny app**.
-2. A well documented and well organized **GitHub repository**.
-3. A `pkgdown` **website** showcasing your work and your package:
-  + Motivate the package and how to use it (think of using vignettes).
-  + Build automatically the website using GitHub action.
 
 ---
 class: sydney-blue, center, middle
