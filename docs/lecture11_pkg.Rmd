@@ -2,7 +2,7 @@
 title: "Programming Tools in Data Science"
 subtitle: "Lecture #11: R package"
 author: "Samuel Orso"
-date: "9 November 2023"
+date: "31 October 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
@@ -62,8 +62,8 @@ Description: More about what it does (maybe more than one line)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://https://github.com/ptds2023/pkgtest
-BugReports: https://https://github.com/ptds2023/pkgtest/issues
+URL: https://https://github.com/ptds2024/pkgtest
+BugReports: https://https://github.com/ptds2024/pkgtest/issues
 RoxygenNote: 7.1.2
 ```
 
@@ -332,7 +332,7 @@ knitr::include_graphics("images/pkgdow_pkgtest.png")
 ```
 
 ---
-Find all the code presented here: <https://github.com/ptds2023/pkgtest>
+Find all the code presented here: <https://github.com/ptds2024/pkgtest>
 
 ---
 # To go further
@@ -350,27 +350,27 @@ class: sydney-blue, center, middle
 .white[`r icons::fontawesome("file")` website]
 </a>
 
-<a href="https://github.com/ptds2023/">
+<a href="https://github.com/ptds2024/">
 .white[`r icons::fontawesome("github")` GitHub]
 </a>
 ]
 
----
-# Exercise
-* Create a package from RStudio new project with the following function:
-  ```{r, eval=FALSE}
-`%r%` <- function(y, x) {
-  fit <- lm(y ~ x)
-  coef(fit)
-}
-```
-* Modify the DESCRIPTION: add an author, a license, dependencies, ...
-* Document the function using roxygen2 (verify your `Build tools` options).
-* Create and add a `snipes` dataset from HW3 to the package (keep the raw data, create a `.rda` file, document the dataset).
-* Construct a vignette.
-* Add examples on how to use the function.
-* Add tests with `testthat`.
+<!-- --- -->
+<!-- # Exercise -->
+<!-- * Create a package from RStudio new project with the following function: -->
+<!--   ```{r, eval=FALSE} -->
+<!-- `%r%` <- function(y, x) { -->
+<!--   fit <- lm(y ~ x) -->
+<!--   coef(fit) -->
+<!-- } -->
+<!-- ``` -->
+<!-- * Modify the DESCRIPTION: add an author, a license, dependencies, ... -->
+<!-- * Document the function using roxygen2 (verify your `Build tools` options). -->
+<!-- * Create and add a `snipes` dataset from HW3 to the package (keep the raw data, create a `.rda` file, document the dataset). -->
+<!-- * Construct a vignette. -->
+<!-- * Add examples on how to use the function. -->
+<!-- * Add tests with `testthat`. -->
 
----
-* Add automated check with GitHub action.
-* Create a website with `pkgdown` and add a GitHub action to build the website.
+<!-- --- -->
+<!-- * Add automated check with GitHub action. -->
+<!-- * Create a website with `pkgdown` and add a GitHub action to build the website. -->

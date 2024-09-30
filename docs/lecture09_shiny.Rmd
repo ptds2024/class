@@ -1,6 +1,6 @@
 ---
 title: "Programming Tools in Data Science"
-subtitle: "Lecture #9: Shiny app I"
+subtitle: "Lecture #9: Shiny app"
 author: "Samuel Orso"
 date: "17 October 2024"
 output:
