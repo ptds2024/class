@@ -80,7 +80,7 @@ read_html(url) %&gt;%
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 31 Oct &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Functional programming, Shiny App, Package creation &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Functional programming, Package creation, Advanced shiny App, &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Samuel &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -143,16 +143,16 @@ top_articles("en.wikipedia",
 
 ```
 ##                        article   views
-## 1                    Main_Page 4666545
-## 2               Special:Search 1083801
-## 3  Wikipedia:Featured_pictures  597043
-## 4              Aryna_Sabalenka  368051
-## 5   Emily_Armstrong_(musician)  355463
-## 6     The_Greatest_of_All_Time  273241
-## 7                  Lee_Carsley  253516
-## 8               Jessica_Pegula  241583
-## 9                  Linkin_Park  238929
-## 10                 Beetlejuice  234582
+## 1                    Main_Page 4547192
+## 2               Special:Search 3517346
+## 3  Wikipedia:Featured_pictures  711303
+## 4                     JD_Vance  453838
+## 5       Lyle_and_Erik_Menéndez  365109
+## 6                    John_Amos  335336
+## 7                     Tim_Walz  272415
+## 8                 Jimmy_Carter  246946
+## 9          Joker:_Folie_à_Deux  221188
+## 10                  Sean_Combs  203529
 ```
 
 ---
@@ -193,7 +193,7 @@ cat(ask_chatgpt("What do you think about the Programming Tools in Data Science c
 ```
 
 ```
-## The Programming Tools in Data Science class in R is a great course that covers essential tools and techniques for data manipulation, analysis, and visualization using the R programming language. It is designed to help you become proficient in R and improve your skills in handling data for data science projects. By mastering these programming tools, you will be better equipped to work with large datasets, perform data wrangling tasks, and create insightful visualizations to extract valuable insights from your data. Overall, this class can be very beneficial for anyone looking to enhance their data science skills using R.
+## The Programming Tools in Data Science class in R is a valuable course for anyone looking to enhance their skills in data science. Learning programming tools specific to R can greatly benefit your data analysis and visualization tasks. By mastering these tools, you may become more efficient in handling data manipulation, cleaning, and transformation processes. Overall, taking this class can help you further develop your expertise in data science using R.
 ```
 
 
@@ -2941,10 +2941,6 @@ url %&gt;% read_html() %&gt;% html_nodes("p + p + p + p + table") %&gt;% html_ta
 url &lt;- "https://data.worldbank.org/indicator/SP.ADO.TFRT"
 url %&gt;% read_html() %&gt;% html_nodes(".item") %&gt;% html_text() # or html_nodes("div.item")
 ```
-
-```
-## [1] "CountryMost Recent YearMost Recent Value"
-```
 * Only the header is returned.
 
 ---
@@ -2963,11 +2959,11 @@ b$close() # close the session
 
 ```
 ## [1] "CountryMost Recent YearMost Recent Value"
-## [2] "Afghanistan202183"                       
-## [3] "Albania202115"                           
-## [4] "Algeria202112"                           
-## [5] "American Samoa202130"                    
-## [6] "Andorra20216"
+## [2] "Afghanistan202280"                       
+## [3] "Albania202214"                           
+## [4] "Algeria202212"                           
+## [5] "American Samoa202230"                    
+## [6] "Andorra20226"
 ```
 
 ---
@@ -2985,7 +2981,7 @@ Some comments on the `chromote` command:
 ---
 # World bank data
 * `chromote` is for `Chrome`, `Chromium` and the likes. `Selenium` is more general.
-* Unfortunately, the solution using `RSelenium` is currently not running on my installation. But here is how a possible implementation would look like.
+* Unfortunately, the solution using `RSelenium` is currently not working properly. But here is how a possible implementation would look like.
 
 ```r
 rD &lt;- rsDriver(browser="firefox", port=4545L, verbose=F)
@@ -2993,6 +2989,90 @@ remDr &lt;- rD[["client"]]
 remDr$navigate(url)
 html_page &lt;- remDr$getPageSource()[[1]]
 html_page %&gt;% read_html() %&gt;% html_nodes(".item") %&gt;% html_text()
+```
+
+---
+# Regular Expressions in R
+
+- Regular expressions (regex) are patterns used to match character combinations in strings. In R, they are particularly useful for extracting or replacing parts of text data.
+
+---
+# Using Regex in R
+
+- R has built-in functions to work with regular expressions:
+  - `grep()`: Search for matches of a pattern in a character vector.
+  - `grepl()`: Returns a logical vector indicating if there is a match.
+  - `sub()`, `gsub()`: Replace the first or all occurrences of a pattern in a string.
+  - `regexpr()`, `gregexpr()`: Find the position and length of matches.
+  - `str_extract()` and `str_replace()` from `stringr` package for a tidy approach.
+
+---
+# Basics of Regular Expressions
+
+- Common symbols used in regular expressions:
+  - `.`: Any single character except newline.
+  - `*`: Zero or more repetitions of the preceding character.
+  - `+`: One or more repetitions of the preceding character.
+  - `?`: Zero or one repetition of the preceding character.
+  - `[]`: A set of characters. For example, `[abc]` matches 'a', 'b', or 'c'.
+  - `^`: In `[]`, it inverts the match. For example, `[^abc]` matches everything except 'a', 'b', or 'c'.
+  - `^`: Matches the start of a string.
+  - `$`: Matches the end of a string.
+  - `-`: Defines a range of characters. For example, `[a-z]` matches any lowercase letter.
+  - `\\`: Escape character.
+
+---
+# Useful pairs of characters
+
+- `\\d`: Any digit.
+- `\\D`: Any non-digit.
+- `\\w`: Any word character (alphanumeric + underscore).
+- `\\W`: Any non-word character.
+- `\\s`: Any whitespace character.
+- `\\S`: Any non-whitespace character.
+
+Quantifiers:
+- `{n}`: Exactly n repetitions.
+- `{n,}`: At least n repetitions.
+- `{n,m}`: Between n and m repetitions.
+
+---
+# Example: Extracting Data with Regex
+
+
+```r
+library(stringr)
+
+text &lt;- "John's email is john.doe@example.com and Jane's email is jane_doe123@example.org"
+
+# Extract all email addresses
+# chatGPT solution:
+# emails &lt;- str_extract_all(text, "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+emails &lt;- str_extract_all(text, "\\S+@\\S+")
+print(emails)
+```
+
+```
+## [[1]]
+## [1] "john.doe@example.com"    "jane_doe123@example.org"
+```
+
+---
+# Example: Cleaning Text with Regex
+
+- Use `gsub()` to clean text data by removing unwanted characters.
+
+
+```r
+# Replace all non-alphanumeric characters with a space
+# chatGPT solution:
+# clean_text &lt;- gsub("[^a-zA-Z0-9\\s]", " ", "Hello, World! Welcome to R programming.")
+clean_text &lt;- gsub("\\W", " ", "Hello, World! Welcome to R programming.")
+print(clean_text)
+```
+
+```
+## [1] "Hello  World  Welcome to R programming "
 ```
 
 ---
@@ -3026,6 +3106,12 @@ class: sydney-blue, center, middle
 * [Automated Data Collection with R: A Practical Guide to Web Scraping and Text Mining](https://www.wiley.com/en-us/Automated+Data+Collection+with+R%3A+A+Practical+Guide+to+Web+Scraping+and+Text+Mining-p-9781118834817)
 * See also the chapters on [webscraping](https://r4ds.hadley.nz/webscraping) and [regular expression](https://r4ds.hadley.nz/regexps) of R for Data Science.
 * W3School for [HTML](https://www.w3schools.com/html/default.asp) and [CSS](https://www.w3schools.com/css/default.asp).
+
+---
+# Resources for Learning Regex
+- [Regular Expressions in R](https://r4ds.hadley.nz/regexps) - Chapter from R for Data Science.
+- [regex101](https://regex101.com/) - An interactive regex tester for experimenting with patterns.
+- [Stringr Package](https://stringr.tidyverse.org/) - Provides functions to simplify regex usage in R.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

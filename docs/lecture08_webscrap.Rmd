@@ -799,7 +799,7 @@ knitr::include_graphics("images/worlddata.png")
 ---
 # World bank data
 * Trying to fetch the data _non-dynamically_ using `class="item"`.
-```{r worldbank-example1}
+```{r worldbank-example1, eval=FALSE}
 url <- "https://data.worldbank.org/indicator/SP.ADO.TFRT"
 url %>% read_html() %>% html_nodes(".item") %>% html_text() # or html_nodes("div.item")
 ```
@@ -808,7 +808,7 @@ url %>% read_html() %>% html_nodes(".item") %>% html_text() # or html_nodes("div
 ---
 # World bank data
 * A first dynamic solution with the `chromote` package.
-```{r worldbank-example2, results='hide'}
+```{r worldbank-example2, results='hide', eval=FALSE}
 library(chromote)
 b <- ChromoteSession$new() # open a chromote session
 url <- "https://data.worldbank.org/indicator/SP.ADO.TFRT"
@@ -819,7 +819,7 @@ b$close() # close the session
 ```
 ```{r, echo=FALSE}
 # knitr not wokring interactively
-print(c("CountryMost Recent YearMost Recent Value", "Afghanistan202183", "Albania202115", "Algeria202112", "American Samoa202130", "Andorra20216"))
+print(c("CountryMost Recent YearMost Recent Value", "Afghanistan202280", "Albania202214", "Algeria202212", "American Samoa202230", "Andorra20226"))
 ```
 
 ---
@@ -837,13 +837,86 @@ Some comments on the `chromote` command:
 ---
 # World bank data
 * `chromote` is for `Chrome`, `Chromium` and the likes. `Selenium` is more general.
-* Unfortunately, the solution using `RSelenium` is currently not running on my installation. But here is how a possible implementation would look like.
+* Unfortunately, the solution using `RSelenium` is currently not working properly. But here is how a possible implementation would look like.
 ```{r worldbank-example5, eval=FALSE}
 rD <- rsDriver(browser="firefox", port=4545L, verbose=F)
 remDr <- rD[["client"]]
 remDr$navigate(url)
 html_page <- remDr$getPageSource()[[1]]
 html_page %>% read_html() %>% html_nodes(".item") %>% html_text()
+```
+
+---
+# Regular Expressions in R
+
+- Regular expressions (regex) are patterns used to match character combinations in strings. In R, they are particularly useful for extracting or replacing parts of text data.
+
+---
+# Using Regex in R
+
+- R has built-in functions to work with regular expressions:
+  - `grep()`: Search for matches of a pattern in a character vector.
+  - `grepl()`: Returns a logical vector indicating if there is a match.
+  - `sub()`, `gsub()`: Replace the first or all occurrences of a pattern in a string.
+  - `regexpr()`, `gregexpr()`: Find the position and length of matches.
+  - `str_extract()` and `str_replace()` from `stringr` package for a tidy approach.
+
+---
+# Basics of Regular Expressions
+
+- Common symbols used in regular expressions:
+  - `.`: Any single character except newline.
+  - `*`: Zero or more repetitions of the preceding character.
+  - `+`: One or more repetitions of the preceding character.
+  - `?`: Zero or one repetition of the preceding character.
+  - `[]`: A set of characters. For example, `[abc]` matches 'a', 'b', or 'c'.
+  - `^`: In `[]`, it inverts the match. For example, `[^abc]` matches everything except 'a', 'b', or 'c'.
+  - `^`: Matches the start of a string.
+  - `$`: Matches the end of a string.
+  - `-`: Defines a range of characters. For example, `[a-z]` matches any lowercase letter.
+  - `\\`: Escape character.
+
+---
+# Useful pairs of characters
+
+- `\\d`: Any digit.
+- `\\D`: Any non-digit.
+- `\\w`: Any word character (alphanumeric + underscore).
+- `\\W`: Any non-word character.
+- `\\s`: Any whitespace character.
+- `\\S`: Any non-whitespace character.
+
+Quantifiers:
+- `{n}`: Exactly n repetitions.
+- `{n,}`: At least n repetitions.
+- `{n,m}`: Between n and m repetitions.
+
+---
+# Example: Extracting Data with Regex
+
+```{r}  
+library(stringr)
+
+text <- "John's email is john.doe@example.com and Jane's email is jane_doe123@example.org"
+
+# Extract all email addresses
+# chatGPT solution:
+# emails <- str_extract_all(text, "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+emails <- str_extract_all(text, "\\S+@\\S+")
+print(emails)
+```
+
+---
+# Example: Cleaning Text with Regex
+
+- Use `gsub()` to clean text data by removing unwanted characters.
+
+```{r}
+# Replace all non-alphanumeric characters with a space
+# chatGPT solution:
+# clean_text <- gsub("[^a-zA-Z0-9\\s]", " ", "Hello, World! Welcome to R programming.")
+clean_text <- gsub("\\W", " ", "Hello, World! Welcome to R programming.")
+print(clean_text)
 ```
 
 ---
@@ -877,3 +950,9 @@ class: sydney-blue, center, middle
 * [Automated Data Collection with R: A Practical Guide to Web Scraping and Text Mining](https://www.wiley.com/en-us/Automated+Data+Collection+with+R%3A+A+Practical+Guide+to+Web+Scraping+and+Text+Mining-p-9781118834817)
 * See also the chapters on [webscraping](https://r4ds.hadley.nz/webscraping) and [regular expression](https://r4ds.hadley.nz/regexps) of R for Data Science.
 * W3School for [HTML](https://www.w3schools.com/html/default.asp) and [CSS](https://www.w3schools.com/css/default.asp).
+
+---
+# Resources for Learning Regex
+- [Regular Expressions in R](https://r4ds.hadley.nz/regexps) - Chapter from R for Data Science.
+- [regex101](https://regex101.com/) - An interactive regex tester for experimenting with patterns.
+- [Stringr Package](https://stringr.tidyverse.org/) - Provides functions to simplify regex usage in R.
