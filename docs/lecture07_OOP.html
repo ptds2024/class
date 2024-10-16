@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Samuel Orso" />
     <meta name="date" content="2024-10-17" />
-    <script src="lecture07_OOP_files/header-attrs-2.25/header-attrs.js"></script>
+    <script src="lecture07_OOP_files/header-attrs-2.28/header-attrs.js"></script>
     <link href="lecture07_OOP_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -53,15 +53,6 @@ class: center, middle, inverse, title-slide
 - Function composition through **nesting** or **piping**.   
 
 ---
-# Ready to continue?
-
-&amp;nbsp;
-
-&lt;center&gt;
-&lt;iframe src="https://giphy.com/embed/xT8qBvH1pAhtfSx52U" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/baby-sleepy-face-first-xT8qBvH1pAhtfSx52U"&gt;via GIPHY&lt;/a&gt;&lt;/p&gt;
-&lt;/center&gt;
-
----
 # S3 OOP system
 * Object-oriented programming (OOP) is one of the most popular programming paradigm. 
 * The type of an object is a **class** and a function implemented for a specific class is a **method**.
@@ -73,7 +64,7 @@ class: center, middle, inverse, title-slide
 ---
 # Example of polymorphism
 
-```r
+``` r
 summary(cars$speed)
 ```
 
@@ -82,7 +73,7 @@ summary(cars$speed)
 ##     4.0    12.0    15.0    15.4    19.0    25.0
 ```
 
-```r
+``` r
 summary(lm(cars$speed~cars$dist))
 ```
 
@@ -110,7 +101,7 @@ summary(lm(cars$speed~cars$dist))
 ---
 What is happening?
 
-```r
+``` r
 sloop::s3_dispatch(summary(cars$speed))
 ```
 
@@ -120,7 +111,7 @@ sloop::s3_dispatch(summary(cars$speed))
 ## =&gt; summary.default
 ```
 
-```r
+``` r
 sloop::s3_dispatch(summary(lm(cars$speed~cars$dist)))
 ```
 
@@ -133,7 +124,7 @@ sloop::s3_dispatch(summary(lm(cars$speed~cars$dist)))
 * `=&gt;` indicates the method is used.
 
 
-```r
+``` r
 class(cars$speed)
 ```
 
@@ -141,7 +132,7 @@ class(cars$speed)
 ## [1] "numeric"
 ```
 
-```r
+``` r
 class(lm(cars$speed~cars$dist))
 ```
 
@@ -152,18 +143,18 @@ class(lm(cars$speed~cars$dist))
 ---
 What is happening?
 
-```r
+``` r
 summary
 ```
 
 ```
 ## function (object, ...) 
 ## UseMethod("summary")
-## &lt;bytecode: 0x560e1d8b5cd0&gt;
+## &lt;bytecode: 0x55762830a208&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
-```r
+``` r
 head(summary.default)
 ```
 
@@ -177,7 +168,7 @@ head(summary.default)
 ## 6         if (missing(digits))
 ```
 
-```r
+``` r
 head(summary.lm)
 ```
 
@@ -196,7 +187,7 @@ head(summary.lm)
 * Using `...` is a special argument which allows to pass any number of additional arguments.
 * You can catch it into a list:
 
-```r
+``` r
 f &lt;- function(...){list(...)}
 f(a=1, b=2)
 ```
@@ -214,14 +205,14 @@ f(a=1, b=2)
 ---
 * A generic is easy to create
 
-```r
+``` r
 my_new_generic &lt;- function(x, ...) {
   UseMethod("my_new_generic")
 }
 ```
 * Then, you can create methods
 
-```r
+``` r
 # default method
 my_new_generic.default &lt;- function(x, ...){
   print("this is default method")
@@ -233,7 +224,7 @@ my_new_generic.lm &lt;- function(x, ...){
 ```
 
 
-```r
+``` r
 my_new_generic(cars$speed)
 ```
 
@@ -241,7 +232,7 @@ my_new_generic(cars$speed)
 ## [1] "this is default method"
 ```
 
-```r
+``` r
 my_new_generic(lm(cars$speed~cars$dist))
 ```
 
@@ -252,7 +243,7 @@ my_new_generic(lm(cars$speed~cars$dist))
 ---
 * check the dispatch
 
-```r
+``` r
 sloop::s3_dispatch(my_new_generic(cars$speed))
 ```
 
@@ -262,7 +253,7 @@ sloop::s3_dispatch(my_new_generic(cars$speed))
 ## =&gt; my_new_generic.default
 ```
 
-```r
+``` r
 sloop::s3_dispatch(my_new_generic(lm(cars$speed~cars$dist)))
 ```
 
@@ -275,7 +266,7 @@ sloop::s3_dispatch(my_new_generic(lm(cars$speed~cars$dist)))
 ---
 * check the dispatch
 
-```r
+``` r
 sloop::s3_dispatch(my_new_generic(cars$speed))
 ```
 
@@ -285,7 +276,7 @@ sloop::s3_dispatch(my_new_generic(cars$speed))
 ## =&gt; my_new_generic.default
 ```
 
-```r
+``` r
 sloop::s3_dispatch(my_new_generic(lm(cars$speed~cars$dist)))
 ```
 
@@ -296,7 +287,7 @@ sloop::s3_dispatch(my_new_generic(lm(cars$speed~cars$dist)))
 * Why are there several output when running `sloop::s3_dispatch(my_new_generic(cars$speed))`?
 
 
-```r
+``` r
 sloop::s3_class(cars$speed)
 ```
 
@@ -310,7 +301,7 @@ sloop::s3_class(cars$speed)
 # Inheritance
 * An object can have several classes like a child has parents and ancestors. For example:
 
-```r
+``` r
 class(glm(cars$speed~cars$dist))
 ```
 
@@ -319,7 +310,7 @@ class(glm(cars$speed~cars$dist))
 ```
 * If a method is not found for the 1st class, then `R` looks for the 2nd class and so on.
 
-```r
+``` r
 sloop::s3_dispatch(summary(glm(cars$speed~cars$dist)))
 ```
 
@@ -329,7 +320,7 @@ sloop::s3_dispatch(summary(glm(cars$speed~cars$dist)))
 ##  * summary.default
 ```
 
-```r
+``` r
 sloop::s3_dispatch(plot(glm(cars$speed~cars$dist)))
 ```
 
@@ -343,7 +334,7 @@ sloop::s3_dispatch(plot(glm(cars$speed~cars$dist)))
 # Create your own S3 class
 * S3 is rather informal and straightforward (be careful!)
 
-```r
+``` r
 set.seed(123) # for reproducibility
 image &lt;- matrix(rgamma(100, shape = 2), 10, 10)
 class(image) &lt;- "pixel"
@@ -351,7 +342,7 @@ class(image) &lt;- "pixel"
 
 * `class` is a special attribute.
 
-```r
+``` r
 attributes(image)
 ```
 
@@ -366,7 +357,7 @@ attributes(image)
 ---
 * Alternatively, it is neater to create a S3 object using `structure`
 
-```r
+``` r
 set.seed(123) # for reproducibility
 image &lt;- structure(
   matrix(rgamma(100, shape = 2), 10, 10),
@@ -375,7 +366,7 @@ image &lt;- structure(
 ```
 * There is no method yet for this class
 
-```r
+``` r
 plot(image)
 ```
 
@@ -384,7 +375,7 @@ plot(image)
 ---
 
 
-```r
+``` r
 sloop::s3_dispatch(plot(image))
 ```
 
@@ -393,14 +384,14 @@ sloop::s3_dispatch(plot(image))
 ## =&gt; plot.default
 ```
 
-```r
+``` r
 plot
 ```
 
 ```
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## &lt;bytecode: 0x560e20a62988&gt;
+## &lt;bytecode: 0x55762b5f95e0&gt;
 ## &lt;environment: namespace:base&gt;
 ```
 
@@ -409,7 +400,7 @@ plot
 * But it is common for generics with `...` arguments such as `mean`, `sum`, `summary`, `plot`, `coefficients`, ...
 
 
-```r
+``` r
 plot.pixel &lt;- function (x, ...) {
   heatmap(x, ...)
 }
@@ -424,7 +415,7 @@ sloop::s3_dispatch(plot(image))
 ---
 * New plot for class `pixel`
 
-```r
+``` r
 plot(image)
 ```
 
@@ -434,7 +425,7 @@ plot(image)
 * Thanks to `...`, you can pass other arguments (but be careful) (see for meaningful arguments `?heatmap`)
 
 
-```r
+``` r
 plot(image, col = cm.colors(256), xlab = "x axis", ylab = "y axis")
 ```
 

@@ -34,15 +34,6 @@ knitr::include_graphics("images/lego-674354_1280.jpg")
 - Function composition through **nesting** or **piping**.   
 
 ---
-# Ready to continue?
-
-&nbsp;
-
-<center>
-<iframe src="https://giphy.com/embed/xT8qBvH1pAhtfSx52U" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/baby-sleepy-face-first-xT8qBvH1pAhtfSx52U">via GIPHY</a></p>
-</center>
-
----
 # S3 OOP system
 * Object-oriented programming (OOP) is one of the most popular programming paradigm. 
 * The type of an object is a **class** and a function implemented for a specific class is a **method**.
