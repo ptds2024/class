@@ -519,31 +519,6 @@ You can decide of the view you prefer <img src="images/shiny_view.png" style="he
 * See also [Shiny RStudio articles](https://shiny.rstudio.com/articles/)
 
 ---
-# Exercise
-1. Develop the app seen in class by adding a second tab with a data table that reports summary statistics of the Old Faithful Geyser (see the UI of the [Buffon's needle example](https://smac-group.github.io/ds/section-shiny-web-applications.html#section-step-2-frontend))
-
-2. Draw the new reactive graph. Can you make the app more efficient? How?
-
-3. Play with different themes using the following code and checkout your console.
-```{r,eval=FALSE}
-library(shiny)
-library(bslib)
-thematic::thematic_shiny(font = "auto")
-
-ui <- fluidPage(
-  theme = bs_theme(),
-  ...
-)
-
-server <- function(input, output) {
-  bs_themer()
-  ...
-}
-
-shinyApp(ui, server)
-```
-
----
 class: sydney-blue, center, middle
 
 # Question ?

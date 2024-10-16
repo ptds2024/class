@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Samuel Orso" />
     <meta name="date" content="2024-10-17" />
-    <script src="lecture09_shiny_files/header-attrs-2.25/header-attrs.js"></script>
+    <script src="lecture09_shiny_files/header-attrs-2.28/header-attrs.js"></script>
     <link href="lecture09_shiny_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -30,7 +30,7 @@ class: center, middle, inverse, title-slide
 # Programming Tools in Data Science
 ]
 .subtitle[
-## Lecture #9: Shiny app I
+## Lecture #9: Shiny app
 ]
 .author[
 ### Samuel Orso
@@ -50,7 +50,7 @@ class: center, middle, inverse, title-slide
 ---
 # Example: interacte with graphics
 
-```r
+``` r
 knitr::include_url("https://gallery.shinyapps.io/095-plot-interaction-advanced/")
 ```
 
@@ -61,7 +61,7 @@ Source: &lt;https://shiny.posit.co/r/gallery&gt;
 ---
 # Example: download a report
 
-```r
+``` r
 knitr::include_url("https://gallery.shinyapps.io/016-knitr-pdf/")
 ```
 
@@ -72,7 +72,7 @@ Source: &lt;https://shiny.posit.co/r/gallery&gt;
 ---
 # Example: rental cashflow calculator 
 
-```r
+``` r
 knitr::include_url("https://cashflowcalc.com/")
 ```
 
@@ -83,7 +83,7 @@ Source: &lt;https://deanattali.com/&gt;
 ---
 # Example: Movie explorer
 
-```r
+``` r
 knitr::include_url("https://gallery.shinyapps.io/051-movie-explorer/")
 ```
 
@@ -95,7 +95,7 @@ Source: &lt;https://shiny.posit.co/&gt;
 # Example: Be a DJ
 
 
-```r
+``` r
 OSUICode::run_example("intro/dj-system",package = "OSUICode")
 ```
 
@@ -105,7 +105,7 @@ Ref: &lt;https://github.com/DivadNojnarg/OSUICode&gt;
 # Hello, world!
 
 
-```r
+``` r
 library(shiny)
 # User interface
 ui &lt;- fluidPage(
@@ -121,7 +121,7 @@ shinyApp(ui, server)
 ---
 * User interface: HTML web page users interface with
 
-```r
+``` r
 ui
 ```
 
@@ -137,14 +137,14 @@ ui
 * Before building the interface of the web application, we need to focus on the `R` code or back-end
 * Suppose we would like to create a histogram based on the waiting time between eruptions of the Old Faithful geyser in Yellowstone National Park (that can be found in the R dataset `faithful`)
 
-```r
+``` r
 x &lt;- faithful[, 2] 
 ```
 
 ---
 * We would like to allow the user to define the number of (equi-spaced) cells 
 
-```r
+``` r
 cells &lt;- 10
 
 # Histogram with input cells
@@ -157,7 +157,7 @@ hist(x, breaks = breaks)
 ---
 * We also would like to allow the user to define the title and x-label
 
-```r
+``` r
 label_x &lt;- "Waiting time to next eruption (in mins)"
 title &lt;- "Old Faithful Geyser Data"
 cells &lt;- 10
@@ -193,7 +193,7 @@ Once we have determined the structure of the code we can develop the UI.
 ]
 .pull-right[
 
-```r
+``` r
 fluidPage(
   titlePanel(),
   sidebarLayout(
@@ -210,7 +210,7 @@ fluidPage(
 ]
 .pull-right[
 
-```r
+``` r
 fluidPage(
   fluidRow(
     column(4, ...),
@@ -269,7 +269,7 @@ Here are some output controls
 ---
 .pull-left[
 
-```r
+``` r
 # Define UI for application that draws a histogram
 ui &lt;- fluidPage(
    
@@ -313,7 +313,7 @@ ui &lt;- fluidPage(
 ---
 
 
-```r
+``` r
 ui &lt;- fluidPage(
   sliderInput(inputId = "cells"),
   textInput(inputId = "label_x"),
@@ -350,7 +350,7 @@ server &lt;- function(input, output, session) {
 
 ---
 
-```r
+``` r
 server &lt;- function(input, output) {
   # generate cells based on input$cells from ui.R
 * x &lt;- reactive(faithful[, 2])
@@ -365,7 +365,7 @@ server &lt;- function(input, output) {
 
 Alternatively
 
-```r
+``` r
 server &lt;- function(input, output) {
   output$distPlot &lt;- renderPlot({
     hist(x(), breaks = breaks(), col = 'darkgray', border = 'white', xlab=input$label_x, main=input$title)
@@ -387,7 +387,7 @@ New reactive graph
 * When working with Shiny, it is essential to understand the reactive environment.
 * **You cannot access input values outside of a reactive context**. For instance, we could imagine creating the `breaks` variable outside `renderPlot`...
 
-```r
+``` r
 server &lt;- function(input, output) {
 * breaks &lt;- seq(min(x), max(x), length.out = input$cells + 1)
   output$distPlot &lt;- renderPlot(...)
@@ -396,7 +396,7 @@ server &lt;- function(input, output) {
 ... but you may get an error, `breaks` will be assigned only once at the beginning of the session.
 * If you use a function instead, 
 
-```r
+``` r
 server &lt;- function(input, output) {
 * breaks &lt;- function() seq(min(x), max(x), length.out = input$cells + 1)
   output$distPlot &lt;- renderPlot(...)
@@ -415,7 +415,7 @@ it will be called every time an input is modified.
 ---
 First, we need to add the `actionButton` to the UI
 
-```r
+``` r
 # Define UI for application that draws a histogram
 ui &lt;- fluidPage(
 
@@ -450,7 +450,7 @@ ui &lt;- fluidPage(
 ---
 Then, add the `eventReactive` into the backend
 
-```r
+``` r
 # Define server logic required to draw a histogram
 server &lt;- function(input, output) {
   # generate cells based on input$cells from ui.R
@@ -469,7 +469,7 @@ server &lt;- function(input, output) {
 ---
 Alternatively, since Shiny 1.6.0 it is recommended to use `reactive %&gt;% bindEvent` (you need `magrittr`)
 
-```r
+``` r
 server &lt;- function(input, output) {
   # generate cells based on input$cells from ui.R
   x &lt;- reactive(faithful[, 2])
@@ -508,7 +508,7 @@ Until the user clicks on the `actionButton`
 ---
 Suppose we'd like to print a message in the console every time a graph is made
 
-```r
+``` r
 server &lt;- function(input, output) {
   ...
   observeEvent(input$make_graph, message("Make a new graph"))
@@ -522,7 +522,7 @@ server &lt;- function(input, output) {
 * More precisely, `shinyApp` creates a Shiny app object and printing it to the console run the app.
 * Alternatively, you could use `runApp`
 
-```r
+``` r
 my_app &lt;- shinyApp(ui = ui, server = server)
 runApp(my_app)
 ```
@@ -537,7 +537,7 @@ runApp(my_app)
 .pull-right[
 Minimal `app.R`
 
-```r
+``` r
 ui &lt;- fluidPage()
 server &lt;- function(input, output, session){}
 shinyApp(ui, server)
@@ -551,32 +551,6 @@ You can decide of the view you prefer &lt;img src="images/shiny_view.png" style=
 * More details and examples in the book [An Introduction to Statistical Programming Methods with R](https://smac-group.github.io/ds/section-shiny-web-applications.html)
 * More material and details in [Mastering Shiny](https://mastering-shiny.org/index.html), especially the first chapters.
 * See also [Shiny RStudio articles](https://shiny.rstudio.com/articles/)
-
----
-# Exercise
-1. Develop the app seen in class by adding a second tab with a data table that reports summary statistics of the Old Faithful Geyser (see the UI of the [Buffon's needle example](https://smac-group.github.io/ds/section-shiny-web-applications.html#section-step-2-frontend))
-
-2. Draw the new reactive graph. Can you make the app more efficient? How?
-
-3. Play with different themes using the following code and checkout your console.
-
-```r
-library(shiny)
-library(bslib)
-thematic::thematic_shiny(font = "auto")
-
-ui &lt;- fluidPage(
-  theme = bs_theme(),
-  ...
-)
-
-server &lt;- function(input, output) {
-  bs_themer()
-  ...
-}
-
-shinyApp(ui, server)
-```
 
 ---
 class: sydney-blue, center, middle
