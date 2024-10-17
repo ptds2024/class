@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Samuel Orso" />
     <meta name="date" content="2024-10-17" />
-    <script src="lecture08_webscrap_files/header-attrs-2.25/header-attrs.js"></script>
+    <script src="lecture08_webscrap_files/header-attrs-2.28/header-attrs.js"></script>
     <link href="lecture08_webscrap_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -44,7 +44,7 @@ class: center, middle, inverse, title-slide
 # Webscraping with R
 
 
-```r
+``` r
 library(rvest)
 url &lt;- "https://ptds.samorso.ch/lectures/"
 
@@ -128,7 +128,7 @@ read_html(url) %&gt;%
 ---
 # API example: Wikipedia pageviews
 
-```r
+``` r
 library(pageviews)
 
 top_articles("en.wikipedia",
@@ -143,16 +143,16 @@ top_articles("en.wikipedia",
 
 ```
 ##                        article   views
-## 1                    Main_Page 4547192
-## 2               Special:Search 3517346
-## 3  Wikipedia:Featured_pictures  711303
-## 4                     JD_Vance  453838
-## 5       Lyle_and_Erik_Menéndez  365109
-## 6                    John_Amos  335336
-## 7                     Tim_Walz  272415
-## 8                 Jimmy_Carter  246946
-## 9          Joker:_Folie_à_Deux  221188
-## 10                  Sean_Combs  203529
+## 1                    Main_Page 4607375
+## 2                   Liam_Payne 2439358
+## 3               Special:Search 1326444
+## 4  Wikipedia:Featured_pictures  702086
+## 5              Cheryl_(singer)  294461
+## 6                One_Direction  287302
+## 7       Lyle_and_Erik_Menendez  257281
+## 8                Thomas_Tuchel  240577
+## 9             Lawrence_Bishnoi  173467
+## 10              Deaths_in_2024  148410
 ```
 
 ---
@@ -180,7 +180,7 @@ This is what we obtain on Google translate:
 ---
 # API Example: ChatGPT
 
-```r
+``` r
 library(chatgpt)
 cat(ask_chatgpt("What do you think about the Programming Tools in Data Science class in R?"))
 ```
@@ -193,7 +193,7 @@ cat(ask_chatgpt("What do you think about the Programming Tools in Data Science c
 ```
 
 ```
-## The Programming Tools in Data Science class in R is a valuable course for anyone looking to enhance their skills in data science. Learning programming tools specific to R can greatly benefit your data analysis and visualization tasks. By mastering these tools, you may become more efficient in handling data manipulation, cleaning, and transformation processes. Overall, taking this class can help you further develop your expertise in data science using R.
+## The Programming Tools in Data Science class in R is a great resource for learning essential programming skills for data science tasks. By mastering tools and techniques in R, you'll be well-equipped to efficiently manipulate and analyze datasets, visualize data, and perform statistical analysis. This class can help you become fluent in R and improve your overall proficiency in data science.
 ```
 
 
@@ -217,7 +217,7 @@ cat(ask_chatgpt("What do you think about the Programming Tools in Data Science c
 # HyperText Markup Language
 
 
-```html
+``` html
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;    
   &lt;body&gt;
@@ -270,7 +270,7 @@ Find out more tags [here](https://developer.mozilla.org/en-US/docs/Web/HTML) or 
 # Data extraction
 Create a HTML page with `minimal_html` for experimenting
 
-```r
+``` r
 html_page &lt;- minimal_html('
   &lt;body&gt;
     &lt;h1&gt;Webscraping with R&lt;/h1&gt;
@@ -293,7 +293,7 @@ html_page &lt;- minimal_html('
 ---
 # Example: list item (li)
 
-```html
+``` html
 ...
     &lt;h2&gt;Technologies&lt;/h2&gt;
     &lt;ol&gt;
@@ -307,7 +307,7 @@ html_page &lt;- minimal_html('
 ...
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("li")
 ```
 
@@ -318,7 +318,7 @@ html_page %&gt;% html_nodes("li")
 ## [3] &lt;li&gt;rvest&lt;/li&gt;
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("li") %&gt;% html_text()
 ```
 
@@ -330,7 +330,7 @@ html_page %&gt;% html_nodes("li") %&gt;% html_text()
 ---
 # Example: heading of order 2 (h2)
 
-```html
+``` html
 ...
 *   &lt;h2&gt;Technologies&lt;/h2&gt;
     &lt;ol&gt;
@@ -344,7 +344,7 @@ html_page %&gt;% html_nodes("li") %&gt;% html_text()
 ...
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("h2") %&gt;% html_text()
 ```
 
@@ -355,7 +355,7 @@ html_page %&gt;% html_nodes("h2") %&gt;% html_text()
 ---
 # Example: emphasized text (em)
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
 *   familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt;
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -371,7 +371,7 @@ html_page %&gt;% html_nodes("h2") %&gt;% html_text()
 *   &lt;em&gt;rvest&lt;/em&gt; is included in the &lt;em&gt;tidyverse&lt;/em&gt;&lt;/p&gt;
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("em") %&gt;% html_text()
 ```
 
@@ -386,7 +386,7 @@ html_page %&gt;% html_nodes("em") %&gt;% html_text()
 * CSS is used to specify the style (appearance, arrangement and variations) of your web pages.
 
 
-```html
+``` html
 &lt;style&gt;
 body {
   background-color: lightblue;
@@ -440,7 +440,7 @@ space	| descendant
 ---
 # Example: grouping `li` and `em`
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -459,7 +459,7 @@ space	| descendant
 ---
 # Example: grouping `li` and `em`
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
 *   familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt;
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -475,7 +475,7 @@ space	| descendant
 *   &lt;em&gt;rvest&lt;/em&gt; is included in the &lt;em&gt;tidyverse&lt;/em&gt;&lt;/p&gt;
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("li, em") %&gt;% html_text()
 ```
 
@@ -494,7 +494,7 @@ html_page %&gt;% html_nodes("li, em") %&gt;% html_text()
 ---
 # Example: all `em` that are descendants of `li`
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -513,7 +513,7 @@ html_page %&gt;% html_nodes("li, em") %&gt;% html_text()
 ---
 # Example: all `em` that are descendants of `li`
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -529,7 +529,7 @@ html_page %&gt;% html_nodes("li, em") %&gt;% html_text()
     &lt;em&gt;rvest&lt;/em&gt; is included in the &lt;em&gt;tidyverse&lt;/em&gt;&lt;/p&gt;
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("li em") %&gt;% html_text()
 ```
 
@@ -545,7 +545,7 @@ html_page %&gt;% html_nodes("li em") %&gt;% html_text()
 ---
 # Example: all `em` that are children of `p`
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -564,7 +564,7 @@ html_page %&gt;% html_nodes("li em") %&gt;% html_text()
 ---
 # Example: all `em` that are children of `p`
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
 *   familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt;
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -580,7 +580,7 @@ html_page %&gt;% html_nodes("li em") %&gt;% html_text()
 *   &lt;em&gt;rvest&lt;/em&gt; is included in the &lt;em&gt;tidyverse&lt;/em&gt;&lt;/p&gt;
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("p &gt; em") %&gt;% html_text()
 ```
 
@@ -597,7 +597,7 @@ html_page %&gt;% html_nodes("p &gt; em") %&gt;% html_text()
 ---
 # Example: `em` immediately after `p`
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -616,7 +616,7 @@ html_page %&gt;% html_nodes("p &gt; em") %&gt;% html_text()
 ---
 # Example: `em` immediately after `p`
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt;
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -632,7 +632,7 @@ html_page %&gt;% html_nodes("p &gt; em") %&gt;% html_text()
     &lt;em&gt;rvest&lt;/em&gt; is included in the &lt;em&gt;tidyverse&lt;/em&gt;&lt;/p&gt;
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("p + em") %&gt;% html_text()
 ```
 
@@ -644,7 +644,7 @@ No `em` are immediately after `p`.
 ---
 # Example: `em` immediately after `em`
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -663,7 +663,7 @@ No `em` are immediately after `p`.
 ---
 # Example: `em` immediately after `em`
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -679,7 +679,7 @@ No `em` are immediately after `p`.
 *   &lt;em&gt;rvest&lt;/em&gt; is included in the &lt;em&gt;tidyverse&lt;/em&gt;&lt;/p&gt;
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("em + em") %&gt;% html_text()
 ```
 
@@ -696,7 +696,7 @@ html_page %&gt;% html_nodes("em + em") %&gt;% html_text()
 ---
 # Example: `em` next sibling of `a`
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -715,7 +715,7 @@ html_page %&gt;% html_nodes("em + em") %&gt;% html_text()
 ---
 # Example: `em` next sibling of `a`
 
-```html
+``` html
 *   &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
 *   familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt;
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -731,7 +731,7 @@ html_page %&gt;% html_nodes("em + em") %&gt;% html_text()
     &lt;em&gt;rvest&lt;/em&gt; is included in the &lt;em&gt;tidyverse&lt;/em&gt;&lt;/p&gt;
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("a ~ em") %&gt;% html_text()
 ```
 
@@ -748,7 +748,7 @@ html_page %&gt;% html_nodes("a ~ em") %&gt;% html_text()
 ---
 # Example: all `li` that are first children
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -767,7 +767,7 @@ html_page %&gt;% html_nodes("a ~ em") %&gt;% html_text()
 ---
 # Example: all `li` that are first children
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -783,7 +783,7 @@ html_page %&gt;% html_nodes("a ~ em") %&gt;% html_text()
     &lt;em&gt;rvest&lt;/em&gt; is included in the &lt;em&gt;tidyverse&lt;/em&gt;&lt;/p&gt;
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("li:first-child") %&gt;% html_text()
 ```
 
@@ -800,7 +800,7 @@ html_page %&gt;% html_nodes("li:first-child") %&gt;% html_text()
 ---
 # Example: all `li` that are second children
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -819,7 +819,7 @@ html_page %&gt;% html_nodes("li:first-child") %&gt;% html_text()
 ---
 # Example: all `li` that are second children
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -835,7 +835,7 @@ html_page %&gt;% html_nodes("li:first-child") %&gt;% html_text()
     &lt;em&gt;rvest&lt;/em&gt; is included in the &lt;em&gt;tidyverse&lt;/em&gt;&lt;/p&gt;
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("li:nth-child(2)") %&gt;% html_text()
 ```
 
@@ -853,7 +853,7 @@ html_page %&gt;% html_nodes("li:nth-child(2)") %&gt;% html_text()
 ---
 # Example: `href` attributes
 
-```html
+``` html
     &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -872,7 +872,7 @@ html_page %&gt;% html_nodes("li:nth-child(2)") %&gt;% html_text()
 ---
 # Example: `href` attributes
 
-```html
+``` html
 *   &lt;p&gt; Basic experience with &lt;a href="www.r-project.org"&gt;R&lt;/a&gt; and
     familiarity with the &lt;em&gt;Tidyverse&lt;/em&gt; is recommended.&lt;/p&gt; 
     &lt;h2&gt;Technologies&lt;/h2&gt;
@@ -888,7 +888,7 @@ html_page %&gt;% html_nodes("li:nth-child(2)") %&gt;% html_text()
     &lt;em&gt;rvest&lt;/em&gt; is included in the &lt;em&gt;tidyverse&lt;/em&gt;&lt;/p&gt;
 ```
 
-```r
+``` r
 html_page %&gt;% html_nodes("a") %&gt;% html_attr("href")
 ```
 
@@ -910,7 +910,7 @@ th |	Table header
 
 ---
 
-```r
+``` r
 basic_table &lt;- minimal_html('
 &lt;body&gt;
 &lt;table&gt;
@@ -931,7 +931,7 @@ basic_table &lt;- minimal_html('
 ')
 ```
 
-```r
+``` r
 basic_table %&gt;% html_table()
 ```
 
@@ -949,44 +949,182 @@ basic_table %&gt;% html_table()
 * We would like to fetch the table with Qualified teams of the Rugby World Cup 2023 on Wikipedia.
 * A first solution: fetch all tables and select the correct one.
 
-```r
+``` r
 url &lt;- "https://en.wikipedia.org/wiki/2023_Rugby_World_Cup"
-url %&gt;% read_html() %&gt;% html_table() %&gt;% .[[5]] %&gt;% kableExtra::kable()
+url %&gt;% read_html() %&gt;% html_table() %&gt;% .[[4]] %&gt;% kableExtra::kable()
 ```
 
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Band 1 &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Band 2 &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Band 3 &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Band 4 &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Band 5 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Region &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Team &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Qualificationmethod &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Previous.mw-parser-output .tooltip-dotted{border-bottom:1px dotted;cursor:help}apps &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Previous best result &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; World Rank¹ &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; .mw-parser-output .plainlist ol,.mw-parser-output .plainlist ul{line-height:inherit;list-style:none;margin:0;padding:0}.mw-parser-output .plainlist ol li,.mw-parser-output .plainlist ul li{margin-bottom:0}
- South Africa (1)
- New Zealand (2)
- England (3)
- Wales (4) &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Ireland (5)
- Australia (6)
- France (7)
- Japan (8) &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Scotland (9)
- Argentina (10)
- Fiji (11)
- Italy (12) &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Samoa (Oceania 1)
- Georgia (Europe 1)
- Uruguay (Americas 1)
- Tonga (Asia/Pacific 1) &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Namibia (Africa 1)
- Romania (Europe 2)
- Chile (Americas 2)
- Portugal (Final Qualifier Winner) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Africa &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; South Africa &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Top 3 in 2019 RWC pool &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Champions (1995, 2007, 2019) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Africa &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Namibia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Africa 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pool stage (six times) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Japan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Top 3 in 2019 RWC pool &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Quarter-finals (2019) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; France &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Hosts &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Runners-up (1987, 1999, 2011) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; England &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Top 3 in 2019 RWC pool &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Champions (2003) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ireland &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Top 3 in 2019 RWC pool &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Quarter-finals (seven times) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Italy &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Top 3 in 2019 RWC pool &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pool stage (nine times) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Scotland &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Top 3 in 2019 RWC pool &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Fourth place (1991) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Wales &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Top 3 in 2019 RWC pool &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Third place (1987) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Georgia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Europe 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pool stage (five times) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Romania &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Europe 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pool stage (eight times) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Portugal &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Final Qualifier &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pool stage (2007) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Oceania &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Australia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Top 3 in 2019 RWC pool &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Champions (1991, 1999) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Oceania &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Fiji &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Top 3 in 2019 RWC pool &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Quarter-finals (1987, 2007) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Oceania &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; New Zealand &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Top 3 in 2019 RWC pool &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Champions (1987, 2011, 2015) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Oceania &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Samoa &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Oceania 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Quarter-finals (1991, 1995) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Oceania &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Tonga &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia/Pacific 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pool stage (eight times) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; South America and North America Rugby &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Argentina &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Top 3 in 2019 RWC pool &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Third place (2007) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; South America and North America Rugby &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Uruguay &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Americas 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pool stage (1999, 2003, 2015, 2019) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; South America and North America Rugby &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Chile &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Americas 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Debut &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1001,7 +1139,7 @@ url %&gt;% read_html() %&gt;% html_table() %&gt;% .[[5]] %&gt;% kableExtra::kabl
 * A better solution using CSS selectors: using the class selector (`.`).
 * Select `class="wikitable"`.
 
-```r
+``` r
 url &lt;- "https://en.wikipedia.org/wiki/2023_Rugby_World_Cup"
 url %&gt;% read_html() %&gt;% html_nodes(".wikitable") %&gt;% html_table() %&gt;% .[[3]] %&gt;% kableExtra::kable() # equivalently html_nodes("table.wikitable")
 ```
@@ -1186,7 +1324,7 @@ url %&gt;% read_html() %&gt;% html_nodes(".wikitable") %&gt;% html_table() %&gt;
 * A better solution using CSS selectors: using the class selector (`.`).
 * Select `class="wikitable sortable"`.
 
-```r
+``` r
 url &lt;- "https://en.wikipedia.org/wiki/2023_Rugby_World_Cup"
 url %&gt;% read_html() %&gt;% html_nodes(".wikitable.sortable") %&gt;% html_table() %&gt;%  kableExtra::kable() # equivalently html_nodes("table.wikitable.sortable")
 ```
@@ -2716,7 +2854,7 @@ url %&gt;% read_html() %&gt;% html_nodes(".wikitable.sortable") %&gt;% html_tabl
 # Example: Wikipedia table
 * An alternative solution: select `table` immediately after four `p`.
 
-```r
+``` r
 url &lt;- "https://en.wikipedia.org/wiki/2023_Rugby_World_Cup"
 url %&gt;% read_html() %&gt;% html_nodes("p + p + p + p + table") %&gt;% html_table() %&gt;% kableExtra::kable()
 ```
@@ -2937,7 +3075,7 @@ url %&gt;% read_html() %&gt;% html_nodes("p + p + p + p + table") %&gt;% html_ta
 # World bank data
 * Trying to fetch the data _non-dynamically_ using `class="item"`.
 
-```r
+``` r
 url &lt;- "https://data.worldbank.org/indicator/SP.ADO.TFRT"
 url %&gt;% read_html() %&gt;% html_nodes(".item") %&gt;% html_text() # or html_nodes("div.item")
 ```
@@ -2947,7 +3085,7 @@ url %&gt;% read_html() %&gt;% html_nodes(".item") %&gt;% html_text() # or html_n
 # World bank data
 * A first dynamic solution with the `chromote` package.
 
-```r
+``` r
 library(chromote)
 b &lt;- ChromoteSession$new() # open a chromote session
 url &lt;- "https://data.worldbank.org/indicator/SP.ADO.TFRT"
@@ -2983,7 +3121,7 @@ Some comments on the `chromote` command:
 * `chromote` is for `Chrome`, `Chromium` and the likes. `Selenium` is more general.
 * Unfortunately, the solution using `RSelenium` is currently not working properly. But here is how a possible implementation would look like.
 
-```r
+``` r
 rD &lt;- rsDriver(browser="firefox", port=4545L, verbose=F)
 remDr &lt;- rD[["client"]]
 remDr$navigate(url)
@@ -3040,7 +3178,7 @@ Quantifiers:
 # Example: Extracting Data with Regex
 
 
-```r
+``` r
 library(stringr)
 
 text &lt;- "John's email is john.doe@example.com and Jane's email is jane_doe123@example.org"
@@ -3063,7 +3201,7 @@ print(emails)
 - Use `gsub()` to clean text data by removing unwanted characters.
 
 
-```r
+``` r
 # Replace all non-alphanumeric characters with a space
 # chatGPT solution:
 # clean_text &lt;- gsub("[^a-zA-Z0-9\\s]", " ", "Hello, World! Welcome to R programming.")

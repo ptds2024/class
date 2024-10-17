@@ -729,7 +729,7 @@ basic_table %>% html_table()
 * A first solution: fetch all tables and select the correct one.
 ```{r wikipedia-example1}
 url <- "https://en.wikipedia.org/wiki/2023_Rugby_World_Cup"
-url %>% read_html() %>% html_table() %>% .[[5]] %>% kableExtra::kable()
+url %>% read_html() %>% html_table() %>% .[[4]] %>% kableExtra::kable()
 ```
 
 ---
