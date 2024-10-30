@@ -213,14 +213,62 @@ run_app <- function(...){
   shinyApp(ui = ui, server = server, ...)
 }
 ```
-* See <https://github.com/ptds2022/bacteria> for a minimal example.
+* See <https://github.com/ptds2024/bacteria> for a minimal example.
+
 
 ---
-# Exercise
-* (from last week) Develop a Shiny app with two tabs: the first to draw an histogram and the second to report summary statistics. Inputs are: number of cells, label for x-axis, title for the graph and an action button.
-* Using the `mtcars` dataset, allow the user to select a variable.
-* Rewrite the app using Shiny modules.
-* Structure the app into a package.
+# `shinyuieditor`
+
+`shinyuieditor` is an R package that allows you to visually design Shiny user interfaces directly from RStudio.  
+It simplifies the process of building UIs, especially for developers who prefer graphical interfaces over code.
+
+- Drag-and-drop interface
+- Instant code generation
+- Customizable UI components
+- Easy integration into Shiny apps
+
+---
+
+# Installing `shinyuieditor`
+
+You can install `shinyuieditor` using the following command:
+
+```r
+install.packages("remotes")
+
+# Install using the remotes package
+remotes::install_github("rstudio/shinyuieditor")
+```
+
+Once installed, you can start the visual editor by launching the add-in from RStudio:
+
+```r
+library(shinyuieditor)
+shinyuieditor::launch_editor(app_loc = getwd())
+```
+
+---
+
+# Demo: Building a UI with `shinyuieditor`
+
+Example workflow:
+
+1. Open **shinyuieditor** from RStudio.
+2. Drag-and-drop elements like text inputs, sliders, and plots onto the canvas.
+3. Customize each component (e.g., set the number of bins for a histogram).
+4. Preview the UI live within the editor.
+5. Export the Shiny UI code.
+
+Resulting code in `app.R` in the chosen location.
+
+---
+# `shinydashboard`
+
+**shinydashboard** is an R package that simplifies the creation of dashboards in Shiny. It provides a structured layout with customizable components, making it easier to organize data and UI elements.
+
+- **Structured layout**: Includes sidebar, header, and body sections for intuitive organization.
+- **Customizable themes**: Choose colors, icons, and design elements for each part of the dashboard.
+- **Responsive design**: Optimized for various screen sizes, allowing dashboards to be viewed on different devices.
 
 ---
 class: sydney-blue, center, middle
@@ -453,14 +501,14 @@ class: sydney-blue, center, middle
 <a href="https://ptds.samorso.ch/">
 .white[`r icons::fontawesome("file")` website]
 </a>
-
+|
 <a href="https://github.com/ptds2024/">
 .white[`r icons::fontawesome("github")` GitHub]
 </a>
 ]
 
 ---
-# Exercise
+# Additional Exercises
 1. Create a `{golem}` application project.
 2. For the UI:   
   a. a user should input a tibble,   

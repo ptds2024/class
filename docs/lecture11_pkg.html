@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Samuel Orso" />
     <meta name="date" content="2024-10-31" />
-    <script src="lecture11_pkg_files/header-attrs-2.25/header-attrs.js"></script>
+    <script src="lecture11_pkg_files/header-attrs-2.28/header-attrs.js"></script>
     <link href="lecture11_pkg_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -51,13 +51,13 @@ class: center, middle, inverse, title-slide
 # Setup
 * You will need (at least) the following packages:
 
-```r
+``` r
 install.packages(c("devtools", "knitr", "pkgdown", "roxygen2", "testthat"))
 ```
 
 * Make sure your system is ready!
 
-```r
+``` r
 devtools::has_devel()
 ```
 
@@ -76,7 +76,7 @@ class: sydney-blue, center, middle
 * DESCRIPTION contains metadata of your package (authors, description, dependencies, contact, ...)
 * It should look like
 
-```r
+``` r
 Package: pkgtest
 Type: Package
 Title: What the Package Does (Title Case)
@@ -91,7 +91,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://https://github.com/ptds2024/pkgtest
 BugReports: https://https://github.com/ptds2024/pkgtest/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1
 ```
 
 ---
@@ -102,7 +102,7 @@ RoxygenNote: 7.1.2
   d. `"cph"`: (copyright holder) used for legal name for an institution or corporate body.
 * `License`: since the point of a package is to be distributed to others, you need to [choose a licence](https://choosealicense.com/licenses/). For example, [MIT](https://choosealicense.com/licenses/mit/) is permissive and can be called
 
-```r
+``` r
 usethis::use_mit_license()
 ```
 
@@ -111,12 +111,12 @@ usethis::use_mit_license()
 * DESCRIPTION lists all the packages needed for your package to work.
 * `Depends` specifies the version of `R`; e.g.
 
-```r
+``` r
 Depends: R (&gt;= 4.0.0) # don't forget the space!
 ```
 * `Imports` lists the package that must be present (best practice is to write `pkg::fct()`); for example, suppose you need `ggplot2` and `dplyr`
 
-```r
+``` r
 Imports:
     dplyr (&gt;= 1.1.2),
     ggplot2 (&gt;= 3.4.3)
@@ -137,7 +137,7 @@ Versioning ensures that users have the right version of the package.
 ---
 * It uses the syntax `#'` with tags `@` and is placed right before functions, e.g.
 
-```r
+``` r
 #' @title hello world function
 #' @return print a message
 #' @export
@@ -155,7 +155,7 @@ hello &lt;- function() {
 ]
 .pull-right[
 
-```r
+``` r
 #' `@title` hello world function
 #' `@author` John Doe
 #' `@details`
@@ -196,7 +196,7 @@ hello &lt;- function() {
 * Suppose you want to make the `snipes.csv` data available to the users.
 * One straightforward way to achieve that is with this code:
 
-```r
+``` r
 ## code to prepare `snipes.csv` dataset
 snipes &lt;- read.csv(file = "data-raw/snipes.csv")
 usethis::use_data(snipes, overwrite = TRUE)
@@ -209,7 +209,7 @@ usethis::use_data(snipes, overwrite = TRUE)
 * `@format` provides an overview of the dataset,
 * `@source` gives details on where the data was obtained.
 
-```r
+``` r
 #' Snipes price data
 #'
 #' @format ## `snipes`
@@ -227,7 +227,7 @@ usethis::use_data(snipes, overwrite = TRUE)
 # `.Rbuildignore`
 * `.Rbuildignore` is the analog of `.gitignore` for `R` package: it is where you can specify files and folders that should be ignored when building a package. 
 
-```r
+``` r
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
@@ -259,7 +259,7 @@ usethis::use_data(snipes, overwrite = TRUE)
 # Example
 In `R/`
 
-```r
+``` r
 #' @title Compute regression coefficients
 #' @param x design \code{matrix}
 #' @param y \code{vector} of responses
@@ -277,9 +277,9 @@ In `R/`
 
 In `/inst/examples/eg_reg_coef.R`
 
-```r
+``` r
 ## linear regression
-cars$speed %c% cars$dist
+cars$speed %r% cars$dist
 ```
 
 ---
@@ -290,9 +290,9 @@ If you click on `check`
 ---
 Now suppose there is a mistake in the code, for instance in `/inst/examples/eg_reg_coef.R`
 
-```r
+``` r
 ## linear regression
-cars$speed %c% cars
+cars$speed %r% cars
 ```
 &lt;img src="images/pkg_check2.png" width="600" height="500" /&gt;
 
@@ -316,7 +316,7 @@ cars$speed %c% cars
 For example, the file `tests/testthat/test_reg_coef.R`
 
 
-```r
+``` r
 test_that("regression coefficient input check",{
   expect_error(cars$speed %r% cars)
 })
@@ -344,7 +344,7 @@ and if everything passes
 * It is quick and automated way to create a website around your package.
 * To build your first website, this is as simple as
 
-```r
+``` r
 # Run once to configure your package to use pkgdown
 usethis::use_pkgdown()
 # Run to build the website
@@ -352,7 +352,7 @@ pkgdown::build_site()
 ```
 * It is also a good idea to add a Github action:
 
-```r
+``` r
 usethis::use_github_action("pkgdown")
 ```
 * Checkout &lt;https://pkgdown.r-lib.org/&gt; for more details.

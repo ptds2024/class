@@ -4,8 +4,8 @@
     <title>Programming Tools in Data Science</title>
     <meta charset="utf-8" />
     <meta name="author" content="Samuel Orso" />
-    <meta name="date" content="2023-11-09" />
-    <script src="lecture10_functional_files/header-attrs-2.22/header-attrs.js"></script>
+    <meta name="date" content="2024-10-31" />
+    <script src="lecture10_functional_files/header-attrs-2.28/header-attrs.js"></script>
     <link href="lecture10_functional_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -36,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Samuel Orso
 ]
 .date[
-### 9 November 2023
+### 31 October 2024
 ]
 
 ---
@@ -63,7 +63,7 @@ class: center, middle, inverse, title-slide
 * A pure function always produces the same output for the same input.
 * Is `rnorm` a *pure* function?
 
-```r
+``` r
 set.seed(123)
 rnorm(10)
 ```
@@ -78,7 +78,7 @@ rnorm(10)
 * A pure function always produces the same output for the same input.
 * Is `rnorm` a *pure* function?
 
-```r
+``` r
 set.seed(123)
 rnorm(10)
 ```
@@ -88,7 +88,7 @@ rnorm(10)
 ##  [7]  0.46091621 -1.26506123 -0.68685285 -0.44566197
 ```
 
-```r
+``` r
 set.seed(124)
 rnorm(10)
 ```
@@ -103,7 +103,7 @@ rnorm(10)
 # First-class function
 * A function can be passed as an argument.
 
-```r
+``` r
 f &lt;- function(g) g(rnorm(10))
 f(sum)
 ```
@@ -112,7 +112,7 @@ f(sum)
 ## [1] -1.923609
 ```
 
-```r
+``` r
 f(max)
 ```
 
@@ -120,7 +120,7 @@ f(max)
 ## [1] 1.675632
 ```
 
-```r
+``` r
 f(mean)
 ```
 
@@ -132,7 +132,7 @@ f(mean)
 # First-class function
 * A function can be returned from other functions.
 
-```r
+``` r
 # Define a function that returns another function
 makeMultiplier &lt;- function(factor) {
   # Define the inner function
@@ -161,7 +161,7 @@ timesFive(10)
 * A function can be passed as an argument and returned from other functions.
 
 
-```r
+``` r
 # Define a function operator that takes a function as an argument
 applyTwice &lt;- function(func) {
   return(function(x) {
@@ -199,7 +199,7 @@ applyTwiceAddTwo(3)
 
 .pull-left[
 
-```r
+``` r
 # Using a for loop to calculate the squares of numbers from 1 to n
 n &lt;- 5
 result &lt;- vector("list", n)
@@ -229,7 +229,7 @@ result
 
 .pull-right[
 
-```r
+``` r
 # Using a functional approach with map
 library(purrr)
 
@@ -261,7 +261,7 @@ squares
 
 .pull-left[
 
-```r
+``` r
 # Using a for loop to calculate the sum of numbers from 1 to n
 n &lt;- 5
 result &lt;- 0
@@ -278,7 +278,7 @@ result
 
 .pull-right[
 
-```r
+``` r
 # Using a functional approach with Reduce
 sequence &lt;- 1:n
 result &lt;- Reduce(function(x, y) x + y, sequence)
@@ -296,7 +296,7 @@ result
 .pull-left[
 - `map` takes a vector `v` and a function `f` as input and return the evaluation of `f` at each element of `v` in a list.
 
-```r
+``` r
 # Using map to calculate the exponential of a vector of numbers
 map(1:2, exp)
 ```
@@ -309,7 +309,7 @@ map(1:2, exp)
 ## [1] 7.389056
 ```
 
-```r
+``` r
 # Or equivalently 
 lapply(1:2, exp)
 ```
@@ -336,7 +336,7 @@ lapply(1:2, exp)
 .pull-left[
 `purrr::map` approach
 
-```r
+``` r
 map_dbl(1:4, exp)
 ```
 
@@ -348,7 +348,7 @@ map_dbl(1:4, exp)
 .pull-right[
 base `R` approach
 
-```r
+``` r
 sapply(1:4, exp)
 ```
 
@@ -356,7 +356,7 @@ sapply(1:4, exp)
 ## [1]  2.718282  7.389056 20.085537 54.598150
 ```
 
-```r
+``` r
 # Type of output must be specified for `vapply`
 vapply(1:4, FUN=exp, FUN.VALUE=double(1))
 ```
@@ -374,7 +374,7 @@ There are situations where the function you would like to pass as an argument do
 .pull-left[
 `purrr::map` approach
 
-```r
+``` r
 map_int(1:4, function(x) if (x %% 2 == 0) return(x^2) else 
   return(x^3))
 ```
@@ -383,7 +383,7 @@ map_int(1:4, function(x) if (x %% 2 == 0) return(x^2) else
 ## [1]  1  4 27 16
 ```
 
-```r
+``` r
 map_int(1:4, ~ if (.x %% 2 == 0) return(.x^2) else 
   return(.x^3))
 ```
@@ -396,7 +396,7 @@ map_int(1:4, ~ if (.x %% 2 == 0) return(.x^2) else
 .pull-right[
 base `R` approach
 
-```r
+``` r
 sapply(1:4, 
        function(x) if (x %% 2 == 0) return(x^2) else 
          return(x^3))
@@ -406,7 +406,7 @@ sapply(1:4,
 ## [1]  1  4 27 16
 ```
 
-```r
+``` r
 vapply(1:4, 
        FUN=function(x) if (x %% 2 == 0) return(x^2) else 
          return(x^3), FUN.VALUE=double(1))
@@ -423,15 +423,19 @@ There several variants to `map` in `purrr`. For example `map2` allows for 2 argu
 .pull-left[
 `map2` takes two vectors `v1`, `v2` and a function `f` as input, plus some additional arguments, and return the evaluation of `f` at each pair of elements of `v1` and `v2` in a list.
 
-```r
-# Using map2 to calculate a weighted mean
+``` r
+# Using map2 to calculate weighted means
 wt &lt;- c(5,  5,  4,  1)/15
-x &lt;- c(3.7,3.3,3.5,2.8)
-map2_dbl(x, wt, weighted.mean)
+wtL &lt;- list(wt1 = wt, wt2=wt, wt3 = wt)
+x &lt;- list(x1 = c(6, 4.5, 5, 4), 
+          x2 = c(5.5, 5, 4.5, 6), 
+          x3 = c(6, 6, 4, 4))
+map2_dbl(x, wtL, weighted.mean)
 ```
 
 ```
-## [1] 3.7 3.3 3.5 2.8
+##       x1       x2       x3 
+## 5.100000 5.100000 5.333333
 ```
 ]
 
@@ -446,7 +450,7 @@ map2_dbl(x, wt, weighted.mean)
 
 .pull-left[
 
-```r
+``` r
 l1 &lt;- as.list(1:3)
 l2 &lt;- as.list(4:6)
 l3 &lt;- as.list(7:9)
@@ -481,38 +485,42 @@ pmap(list(l1, l2, l3), calculate_sum)
 
 .pull-left[
 
-```r
-# Using mapply to calculate a weighted mean
+``` r
+# Using mapply to calculate weighted means
 wt &lt;- c(5,  5,  4,  1)/15
-x &lt;- c(3.7,3.3,3.5,2.8)
-mapply(FUN = weighted.mean, x, wt)
+wtL &lt;- list(wt1 = wt, wt2=wt, wt3 = wt)
+x &lt;- list(x1 = c(6, 4.5, 5, 4), 
+          x2 = c(5.5, 5, 4.5, 6), 
+          x3 = c(6, 6, 4, 4))
+mapply(FUN = weighted.mean, x, wtL)
 ```
 
 ```
-## [1] 3.7 3.3 3.5 2.8
+##       x1       x2       x3 
+## 5.100000 5.100000 5.333333
 ```
 ]
 .pull-right[
 
-```r
+``` r
 # Using Map to calculate a weighted mean
 wt &lt;- c(5,  5,  4,  1)/15
-x &lt;- c(3.7,3.3,3.5,2.8)
-Map(f = weighted.mean, x, wt)
+wtL &lt;- list(wt1 = wt, wt2=wt, wt3 = wt)
+x &lt;- list(x1 = c(6, 4.5, 5, 4), 
+          x2 = c(5.5, 5, 4.5, 6), 
+          x3 = c(6, 6, 4, 4))
+Map(f = weighted.mean, x, wtL)
 ```
 
 ```
-## [[1]]
-## [1] 3.7
+## $x1
+## [1] 5.1
 ## 
-## [[2]]
-## [1] 3.3
+## $x2
+## [1] 5.1
 ## 
-## [[3]]
-## [1] 3.5
-## 
-## [[4]]
-## [1] 2.8
+## $x3
+## [1] 5.333333
 ```
 ]
 
@@ -521,7 +529,7 @@ Map(f = weighted.mean, x, wt)
 - `outer(X, Y, FUN, ...)` produce an array (or matrix) with the same dimension as the outer product of `X` and `Y` applied to a vectorized `FUN`.
 
 
-```r
+``` r
 outer(X = c("a","b","c"), Y = c("1", "2", "3", "4"), FUN = paste0)
 ```
 
@@ -540,7 +548,7 @@ outer(X = c("a","b","c"), Y = c("1", "2", "3", "4"), FUN = paste0)
 
 .pull-left[
 
-```r
+``` r
 # Using a functional approach with Reduce
 sequence &lt;- 1:10
 Reduce(function(x, y) x + y, sequence)
@@ -550,7 +558,7 @@ Reduce(function(x, y) x + y, sequence)
 ## [1] 55
 ```
 
-```r
+``` r
 # or shorter
 Reduce(`+`, 1:10)
 ```
@@ -571,7 +579,7 @@ Reduce(`+`, 1:10)
 
 .pull-left[
 
-```r
+``` r
 # Using map to calculate the exponential of a vector of numbers
 map(1:2, exp)
 ```
@@ -584,7 +592,7 @@ map(1:2, exp)
 ## [1] 7.389056
 ```
 
-```r
+``` r
 # Or equivalently 
 lapply(1:2, exp)
 ```
@@ -599,7 +607,7 @@ lapply(1:2, exp)
 ]
 .pull-right[
 
-```r
+``` r
 # Exp is already vectorized
 exp(1:2)
 ```
@@ -614,7 +622,7 @@ exp(1:2)
 - There is a dedicated function `Vectorize` that vectorizes a function.
 
 
-```r
+``` r
 # return square if even, cube if otherwise
 # `purrr::map` approach
 map_int(1:4, ~ if (.x %% 2 == 0) return(.x^2) else 
@@ -625,7 +633,7 @@ map_int(1:4, ~ if (.x %% 2 == 0) return(.x^2) else
 ## [1]  1  4 27 16
 ```
 
-```r
+``` r
 f &lt;- function(x) if (x %% 2 == 0) return(x^2) else 
   return(x^3)
 f(1:4)
@@ -640,7 +648,7 @@ f(1:4)
 - There is a dedicated function `Vectorize` that vectorizes a function.
 
 
-```r
+``` r
 # return square if even, cube if otherwise
 f &lt;- function(x) if (x %% 2 == 0) return(x^2) else 
   return(x^3)
@@ -657,7 +665,7 @@ vf(1:4)
 - There is a dedicated function `Vectorize` that vectorizes a function.
 
 
-```r
+``` r
 # return square if even, cube if otherwise
 vf &lt;- Vectorize(FUN = f, vectorize.args = "x")
 
@@ -678,7 +686,7 @@ efforts into independent parallel subtasks.
 * `R`'s library `parallel` comes with your `R` installation and offers several parallelized version of the different `apply` functions.
 
 
-```r
+``` r
 # how many cores on the current host?
 library(parallel)
 detectCores()
@@ -695,7 +703,7 @@ detectCores()
 - Forking is the Unix-based (might not work on Windows) process of creating new child process, which is an identical copy of the parent process, allowing for concurrent execution of multiple tasks.
 
 
-```r
+``` r
 measure_time &lt;- function(x){
   t1 &lt;- Sys.time()
   Sys.sleep(x)
@@ -707,29 +715,29 @@ measure_time &lt;- function(x){
 ---
 # Forking with `mclapply`
 
-```r
+``` r
 t1 &lt;- Sys.time()
 mclapply(1:5, measure_time, mc.cores = 5)
 ```
 
 ```
 ## [[1]]
-## Time difference of 1.000397 secs
+## Time difference of 1.001395 secs
 ## 
 ## [[2]]
-## Time difference of 2.00121 secs
+## Time difference of 2.002373 secs
 ## 
 ## [[3]]
-## Time difference of 3.00318 secs
+## Time difference of 3.002665 secs
 ## 
 ## [[4]]
-## Time difference of 4.003298 secs
+## Time difference of 4.004278 secs
 ## 
 ## [[5]]
-## Time difference of 5.004398 secs
+## Time difference of 5.005422 secs
 ```
 
-```r
+``` r
 t2 &lt;- Sys.time()
 sprintf("In total, it took %.1f seconds to run", difftime(t2,t1,units="secs"))
 ```
@@ -743,7 +751,7 @@ sprintf("In total, it took %.1f seconds to run", difftime(t2,t1,units="secs"))
 # Building a Socket Cluster with `parLapply`
 - A socket enables interprocess communication between concurrent applications running on the computer. This is an alternative to forking mechanism.
 
-```r
+``` r
 cl &lt;- makeCluster(5)
 t1 &lt;- Sys.time()
 parLapply(cl, 1:5, measure_time)
@@ -751,35 +759,35 @@ parLapply(cl, 1:5, measure_time)
 
 ```
 ## [[1]]
-## Time difference of 1.001193 secs
+## Time difference of 1.00124 secs
 ## 
 ## [[2]]
-## Time difference of 2.002205 secs
+## Time difference of 2.002342 secs
 ## 
 ## [[3]]
-## Time difference of 3.002846 secs
+## Time difference of 3.003498 secs
 ## 
 ## [[4]]
-## Time difference of 4.003711 secs
+## Time difference of 4.004308 secs
 ## 
 ## [[5]]
-## Time difference of 5.005257 secs
+## Time difference of 5.005362 secs
 ```
 
-```r
+``` r
 t2 &lt;- Sys.time()
 ```
 
 ---
 # Building a Socket Cluster with `parLapply`
 
-```r
+``` r
 stopCluster(cl)
 sprintf("In total, it took %.1f seconds to run", difftime(t2,t1,units="secs"))
 ```
 
 ```
-## [1] "In total, it took 5.1 seconds to run"
+## [1] "In total, it took 5.0 seconds to run"
 ```
 
 
@@ -793,29 +801,10 @@ class: sydney-blue, center, middle
 .white[&lt;svg viewBox="0 0 384 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM332.1 128H256V51.9l76.1 76.1zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288H48z"&gt;&lt;/path&gt;&lt;/svg&gt; website]
 &lt;/a&gt;
 
-&lt;a href="https://github.com/ptds2023/"&gt;
+&lt;a href="https://github.com/ptds2024/"&gt;
 .white[&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; GitHub]
 &lt;/a&gt;
 ]
-
----
-# Exercise
-You work for a retail company, and you have a list of products with their daily sales for each day of the month. 
-
-```r
-product_sales &lt;- list(
-  product1 = c(50, 45, 60, 55, 70, 80, 75, 90, 85, 60, 70, 65, 70, 75, 80, 85, 90, 95, 85, 70, 75, 80, 60, 45, 55, 50, 45, 60, 65),
-  product2 = c(30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175),
-  product3 = c(20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78)
-)
-```
-
-1. Using a for loop, calculate the total monthly sales for each product.
-2. Repeat 1. using `map`.
-3. Repeat 1. using `lapply`.
-4. Repeat 1. using `sapply`.
-5. Repeat 1. using `vapply`.
-6. Repeat 1. using `mclapply` or `parLapply`.
 
 ---
 # To go further

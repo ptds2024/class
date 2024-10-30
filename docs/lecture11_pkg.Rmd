@@ -64,7 +64,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://https://github.com/ptds2024/pkgtest
 BugReports: https://https://github.com/ptds2024/pkgtest/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1
 ```
 
 ---
@@ -88,8 +88,8 @@ Depends: R (>= 4.0.0) # don't forget the space!
 * `Imports` lists the package that must be present (best practice is to write `pkg::fct()`); for example, suppose you need `ggplot2` and `dplyr`
 ```{r,eval=FALSE}
 Imports:
-    dplyr (>= 1.1.2),
-    ggplot2 (>= 3.4.3)
+    dplyr (>= 1.1.4),
+    ggplot2 (>= 3.5.1)
 ```
 Versioning ensures that users have the right version of the package.
 
@@ -246,7 +246,7 @@ In `R/`
 In `/inst/examples/eg_reg_coef.R`
 ```{r,eval=FALSE}
 ## linear regression
-cars$speed %c% cars$dist
+cars$speed %r% cars$dist
 ```
 
 ---
@@ -260,7 +260,7 @@ knitr::include_graphics("images/pkg_check.png")
 Now suppose there is a mistake in the code, for instance in `/inst/examples/eg_reg_coef.R`
 ```{r,eval=FALSE}
 ## linear regression
-cars$speed %c% cars
+cars$speed %r% cars
 ```
 ```{r,echo=FALSE,out.width=600,out.height=500}
 knitr::include_graphics("images/pkg_check2.png")

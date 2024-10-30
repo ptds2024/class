@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Samuel Orso" />
     <meta name="date" content="2024-10-31" />
-    <script src="lecture12_shiny2_files/header-attrs-2.25/header-attrs.js"></script>
+    <script src="lecture12_shiny2_files/header-attrs-2.28/header-attrs.js"></script>
     <link href="lecture12_shiny2_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -63,7 +63,7 @@ Modules are one of the most powerful tools for building shiny applications in a 
 * Every environment has a parent, which varies according to the order in which packages are loaded.
 * Suppose that we load a package that includes a function `var`, would the following function behaves as intended by their programmer? 
 
-```r
+``` r
 &gt; sd
 function (x, na.rm = FALSE) 
 *sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
@@ -88,7 +88,7 @@ function (x, na.rm = FALSE)
 ---
 # Simple example
 
-```r
+``` r
 # Shiny App
 library(shiny)
 
@@ -111,7 +111,7 @@ shinyApp(ui = ui, server = server)
 ---
 # UI module
 
-```r
+``` r
 histogramUI &lt;- function(id) {
   # This ns &lt;- NS structure creates a 
   # "namespacing" function, that will 
@@ -133,7 +133,7 @@ histogramUI &lt;- function(id) {
 ---
 # Server module
 
-```r
+``` r
 histogramServer &lt;- function(id) {
   moduleServer(id, function(input, output, session) {
     data &lt;- reactive(mtcars[[input$var]])
@@ -149,7 +149,7 @@ histogramServer &lt;- function(id) {
 ---
 # Back to the app
 
-```r
+``` r
 # Main application
 ui &lt;- fluidPage(
   histogramUI("hist1")
@@ -169,7 +169,7 @@ shinyApp(ui, server)
 * For server module, the namespacing is implicit. Shiny automatically namespaces input and output following the same convention as UI module.
 * In the following example, the `input$bins` from the `sliderInput` is never used, even though it "appears" in the server module.
 
-```r
+``` r
 # Recall server function has this line:
 ...
 hist(data(), breaks = input$bins, main = input$var)
@@ -195,7 +195,7 @@ shinyApp(ui, server)
 ---
 # Example
 
-```r
+``` r
 # New server module
 *histogramServer &lt;- function(id, data, title = reactive("Histogram")) {
   stopifnot(is.reactive(data))
@@ -233,7 +233,7 @@ shinyApp(ui, server)
 * The idea is similar to a `R` package: `R` functions and modules are documented, tested and go into `R/`.
 * The app is wrapped into a function, for example:
 
-```r
+``` r
 # Run the application
 #' @title App for bacteria mobility
 #' @importFrom shiny shinyApp
@@ -242,14 +242,62 @@ run_app &lt;- function(...){
   shinyApp(ui = ui, server = server, ...)
 }
 ```
-* See &lt;https://github.com/ptds2022/bacteria&gt; for a minimal example.
+* See &lt;https://github.com/ptds2024/bacteria&gt; for a minimal example.
+
 
 ---
-# Exercise
-* (from last week) Develop a Shiny app with two tabs: the first to draw an histogram and the second to report summary statistics. Inputs are: number of cells, label for x-axis, title for the graph and an action button.
-* Using the `mtcars` dataset, allow the user to select a variable.
-* Rewrite the app using Shiny modules.
-* Structure the app into a package.
+# `shinyuieditor`
+
+`shinyuieditor` is an R package that allows you to visually design Shiny user interfaces directly from RStudio.  
+It simplifies the process of building UIs, especially for developers who prefer graphical interfaces over code.
+
+- Drag-and-drop interface
+- Instant code generation
+- Customizable UI components
+- Easy integration into Shiny apps
+
+---
+
+# Installing `shinyuieditor`
+
+You can install `shinyuieditor` using the following command:
+
+```r
+install.packages("remotes")
+
+# Install using the remotes package
+remotes::install_github("rstudio/shinyuieditor")
+```
+
+Once installed, you can start the visual editor by launching the add-in from RStudio:
+
+```r
+library(shinyuieditor)
+shinyuieditor::launch_editor(app_loc = getwd())
+```
+
+---
+
+# Demo: Building a UI with `shinyuieditor`
+
+Example workflow:
+
+1. Open **shinyuieditor** from RStudio.
+2. Drag-and-drop elements like text inputs, sliders, and plots onto the canvas.
+3. Customize each component (e.g., set the number of bins for a histogram).
+4. Preview the UI live within the editor.
+5. Export the Shiny UI code.
+
+Resulting code in `app.R` in the chosen location.
+
+---
+# `shinydashboard`
+
+**shinydashboard** is an R package that simplifies the creation of dashboards in Shiny. It provides a structured layout with customizable components, making it easier to organize data and UI elements.
+
+- **Structured layout**: Includes sidebar, header, and body sections for intuitive organization.
+- **Customizable themes**: Choose colors, icons, and design elements for each part of the dashboard.
+- **Responsive design**: Optimized for various screen sizes, allowing dashboards to be viewed on different devices.
 
 ---
 class: sydney-blue, center, middle
@@ -326,12 +374,12 @@ See for example the [`{hexmake}`](https://github.com/ColinFay/hexmake/tree/maste
 # Save development time with `{shinysnippets}`
 * You can install `{shinysnippets}` from GitHub:
 
-```r
+``` r
 remotes::install_github("Thinkr-open/shinysnippets")
 ```
 * Then run:
 
-```r
+``` r
 shinysnippets::add_snippets()
 ```
 and confirm.
@@ -360,7 +408,7 @@ This bottleneck is the very thing you should be optimizing: having faster code a
 * A good way to profile R code is to use the [profvis](https://rstudio.github.io/profvis/) package.
 * For a Shiny App, you could use simply use it as follows:
 
-```r
+``` r
 # Note the explicit call to runApp() here: this is important
 # as otherwise the app won't actually run.
 profvis::profvis(runApp(shinyApp(ui, server)))
@@ -369,7 +417,7 @@ profvis::profvis(runApp(shinyApp(ui, server)))
 ---
 # Example
 
-```r
+``` r
 library(profvis)
 
 f &lt;- function() {
@@ -389,7 +437,7 @@ profvis::profvis(f())
 ---
 # Example
 
-```r
+``` r
 library(shiny)
 ui &lt;- fluidPage(
   actionButton("x", "Click on me"),
@@ -465,14 +513,14 @@ class: sydney-blue, center, middle
 &lt;a href="https://ptds.samorso.ch/"&gt;
 .white[&lt;svg viewBox="0 0 384 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM332.1 128H256V51.9l76.1 76.1zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288H48z"&gt;&lt;/path&gt;&lt;/svg&gt; website]
 &lt;/a&gt;
-
+|
 &lt;a href="https://github.com/ptds2024/"&gt;
 .white[&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; GitHub]
 &lt;/a&gt;
 ]
 
 ---
-# Exercise
+# Additional Exercises
 1. Create a `{golem}` application project.
 2. For the UI:   
   a. a user should input a tibble,   
