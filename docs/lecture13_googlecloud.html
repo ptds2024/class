@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data Science with R on Google Cloud</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Samuel Orso" />
+    <meta name="date" content="2024-11-14" />
+    <script src="lecture13_googlecloud_files/header-attrs-2.28/header-attrs.js"></script>
+    <link href="lecture13_googlecloud_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+      });
+    </script>
+    <style>
+    .mjx-mrow a {
+      color: black;
+      pointer-events: none;
+      cursor: default;
+    }
+    </style>
+    <link rel="stylesheet" href="assets/sydney-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="assets/sydney.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Data Science with R on Google Cloud
+]
+.subtitle[
+## Leveraging BigQuery and Vertex AI Workbench
+]
+.author[
+### Samuel Orso
+]
+.date[
+### 14 November 2024
+]
+
+---
+
+
+# Introduction to Google Cloud for Data Science
+
+**Google Cloud** provides a suite of tools that enhance data science workflows:
+
+- **BigQuery**: A fully managed and serverless data warehouse, ideal for processing large datasets with SQL.
+- **Vertex AI Workbench**: A unified development environment for building and managing machine learning models.
+
+---
+
+# Why use Google Cloud?
+
+- **Scalable infrastructure**: Manage massive datasets with no concern about storage limits.
+- **Serverless environment**: Focus on data analysis without worrying about the underlying infrastructure.
+- **Integrated with R**: Use your favorite R libraries alongside Google Cloud’s services.
+
+
+---
+
+
+class: sydney-blue, center, middle
+
+# BigQuery SQL
+
+![Database Icon](https://img.icons8.com/ios-filled/50/000000/database.png)
+
+---
+
+## Typical Data for a Project
+
+
+| **Type**         | **Description**        |
+|------------------|------------------------|
+| **Transactional**| Your data              |
+| **Behavioral**   | Your data              |
+| **Public Data**  | Open datasets          |
+| **Premium Data** | Paid datasets          |
+
+---
+## Data Warehouse
+
+In an organization, data is typically stored in:
+
+1. Several computers: **operational databases**
+2. A central place for analysis: a **data warehouse** for **analytical data**.
+
+---
+
+## Flow of Data Processing
+
+1. Formulate business questions
+2. Select DB/NoSQL and set it up
+3. ETL (Extract - Transform - Load)
+4. Query Data/Create predictive models
+5. Present/Visualize Data
+
+
+---
+
+## Tools for Big Data Analysis
+
+.pull-left[
+There exist many tools for
+Big Data analysis. Some of them are:
+- Databases (SQL)
+- NoSQL platforms
+- Cloud storage options (AWS, Google Cloud, etc.)
+- The easiest one of all (and the oldest!) is a database.
+]
+
+.pull-right[
+&lt;img src="images/tools_big_data.png" width="90%"&gt;&lt;/img&gt;
+&lt;!-- ![](images/tools_big_data.png){ width=10% } --&gt;
+]
+
+---
+
+## Data Management on...
+Most common data management platforms:
+
+- **Relational Databases (RDBMS)** – Structure-based, SQL support.
+- **NoSQL** – Flexible schema, good for unstructured data.
+
+**On-Premises or Cloud-Based**
+
+---
+
+## SQL / NoSQL
+
+.pull-left[
+### SQL Databases (relational databases)
+- Structured query language
+- Suited for structured data
+- Relationships and tables
+
+### NoSQL Databases (non-relational databases)
+- Dynamic schema for unstructured data
+- Flexible for creating unique structures
+- Unstructured or semi-structured data
+- Document, graph, column, KeyValue structures
+]
+
+.pull-right[
+&lt;img src="images/sql_nosql.png" width="90%"&gt;&lt;/img&gt;
+]
+
+---
+
+## Relational Systems
+
+.pull-left[
+### Advantages of Relational Systems:
+- Mature technology:
+  + Well-defined interfaces (SQL)
+  + Structured and organized
+  + Provides meta-data in the form of a schema
+- Built-in multi-user synchronization for data integrity
+- Good at basic statistics and reporting
+- Built-in query processing engines
+]
+
+.pull-right[
+&lt;img src="images/rdbms.jpeg" width="90%"&gt;&lt;/img&gt;
+]
+
+---
+## Object-relational mapping
+
+![](images/relational_system.png)
+
+---
+
+## SQL = Structured Query Language
+
+- It is a compact language to express complex questions. For example:
+```sql
+SELECT country, pollutant, particles  
+FROM `air_quality`  
+WHERE country = 'India' AND pollutant = 'NO2' AND particles &gt; 100
+```
+
+- You don't need to specify the steps for accomplishing this task (another example of **declarative programming**).
+- The SQL runtime decomposes the query into subroutines and picks the best way to execute it (i.e., which subroutine to do first, which second, etc).
+
+---
+
+.pull-left[
+```sql
+SELECT country, pollutant, particles  
+FROM `air_quality`  
+WHERE country = 'India' AND pollutant = 'NO2' AND particles &gt; 100
+```
+
+Suppose that:
+- `country` = {India, ...} is of length 1,000,
+- `pollutant` = {NO2, ...} is of length 100,
+- `particles` = {100, 90, ...} is of length 10,000.
+
+Which filter in the `WHERE` clause would you run first? 
+
+*The query scheduler takes care of it, we don‘t have to worry about this.*
+]
+
+.pull-right[
+| Country     | Pollutant | Particles |
+|-------------|-----------|-----------|
+| USA         | NO2       | 90        |
+| USA         | CO2       | 100       |
+| ...         | ...       | ...       |
+| India       | NO2       | 200       |
+| India       | NO2       | 210       |
+| India       | CO2       | 110       |
+| ...         | ...       | ...       |
+| Switzerland | CO2       | 20        |
+| Switzerland | CO2       | 20        |
+| ...         | ...       | ...       |
+]
+
+
+---
+
+## SQL recap using BigQuery
+[25 coupons available her](https://gcp.secure.force.com/GCPEDU?cid=Ncm9el8tbkERzXbkPJpMgwaJx94HFlJ%2B04qxXz5pNPkUhvORKP5Oh8G%2FQGh2zYfC/), 
+[15 coupons available here](https://gcp.secure.force.com/GCPEDU?cid=N1VtxV7gWWtgMIkI%2Bf8N83G%2FnZnaHK4biN2is7y2vVU3%2Bku4WRTzwuLtVLk2V4hb/)
+
+&lt;img src="images/googlecloud.png"&gt;&lt;/img&gt;
+
+---
+
+### Practicing SQL with BigQuery
+
+Before to begin:
+1. In the Google Cloud console, select or create a Google Cloud project.
+2. BigQuery has lots of public data available. To access it, click on ADD towards top left:
+![](images/bigquery1.png)
+3. Enter "public dataset" in the search bar:
+![](images/bigquery2.png)
+---
+&lt;ol start=4&gt; &lt;li&gt;Then we propose to use the `bigquery-public-data.openaq.global_air_quality` dataset:&lt;/li&gt;&lt;/ol&gt;
+![](images/bigquery3.png)
+
+---
+&lt;ol start=5&gt;&lt;li&gt; You can preview the dataset by clicking on the table name:&lt;/li&gt;&lt;/ol&gt;
+![](images/bigquery4.png)
+
+---
+&lt;ol start=6&gt;&lt;li&gt; To start querying the dataset, you can click on "Home" button then click on "SQL QUERY":&lt;/li&gt;&lt;/ol&gt;
+&lt;img src="images/bigquery5.png"&gt;&lt;/img&gt;
+
+&lt;ol start=7&gt;&lt;li&gt; Now you write SQL commands in the query windows and click on "RUN" to execute.&lt;/li&gt;&lt;/ol&gt;
+
+---
+
+## Select, From, Where
+
+.pull-left-2[
+```sql
+SELECT city  
+FROM `bigquery-public-data.openaq.global_air_quality`  
+WHERE country = 'CH'
+```
+
+Asked ChatGPT for comment on SQL query:
+
+- **`SELECT city`**: Specifies that we want to retrieve only the values in the **city** column.
+
+- **`FROM 'bigquery-public-data.openaq.global_air_quality'`**: Indicates the source table where the data is stored. In this case, it’s the **global_air_quality** table, which is part of the **openaq** dataset within **bigquery-public-data** on Google BigQuery.
+
+- **`WHERE country = 'CH'`**: This is a filter condition that limits the results to only those rows where the **country** column has the value **'CH'** (the country code for Switzerland).
+
+]
+
+.pull-right-1[
+&lt;img src="images/sql1.png" width="90%"&gt;&lt;/img&gt;
+]
+
+---
+
+## Select, From, Where with Distinct
+
+.pull-left[
+```sql
+SELECT DISTINCT city, country  
+FROM `bigquery-public-data.openaq.global_air_quality`  
+WHERE country = 'CH'
+```
+
+Note: Capitalization is not required for SQL commands but it is a common convention to make SQL keywords stand out. It is considered best practice.
+]
+
+.pull-right[
+&lt;img src="images/sql2.png" width="90%"&gt;&lt;/img&gt;
+]
+
+---
+
+## Filtering with Conditions
+
+&gt; **Query:** Records in India with no2 value more than 100.
+
+```sql
+SELECT city, country, pollutant, value  
+FROM `bigquery-public-data.openaq.global_air_quality`  
+WHERE country = 'IN' AND pollutant = 'no2' AND value &gt; 100
+```
+&lt;img src="images/sql3.png" width="90%"&gt;&lt;/img&gt;
+
+---
+## LIMIT the Number of Results
+&lt;img src="images/sql4.png" width="90%"&gt;&lt;/img&gt;
+
+---
+## Select all columns with `*`
+&lt;img src="images/sql5.png" width="90%"&gt;&lt;/img&gt;
+
+---
+
+## Counting Records with COUNT()
+
+```sql
+SELECT COUNT(*)  
+FROM `bigquery-public-data.openaq.global_air_quality`  
+WHERE country = 'IN' AND pollutant = 'no2' AND value &gt; 100
+```
+&lt;img src="images/sql6.png" width="90%"&gt;&lt;/img&gt;
+
+---
+
+## Aggregate Functions: MIN(), MAX(), SUM(), AVG()
+
+&gt; **Query:** What is the average no2 pollutant value in US? In India? 
+
+.pull-left[
+```sql
+SELECT AVG(value) AS avg_no2  
+FROM `bigquery-public-data.openaq.global_air_quality`  
+WHERE country = 'US' AND pollutant = 'no2'
+```
+&lt;img src="images/sql7.png" width="90%"&gt;&lt;/img&gt;
+]
+
+.pull-right[
+```sql
+SELECT AVG(value) AS avg_no2  
+FROM `bigquery-public-data.openaq.global_air_quality`  
+WHERE country = 'IN' AND pollutant = 'no2'
+```
+&lt;img src="images/sql8.png" width="90%"&gt;&lt;/img&gt;
+]
+
+What about Switzerland? What about the max?
+
+---
+
+## WITH Clause
+
+&gt; **Query:** Number of bitcoin transactions per date, sorted by date.
+
+&lt;img src="images/sql9.png"&gt;&lt;/img&gt;
+
+---
+
+```sql
+WITH time AS (  
+    SELECT DATE(block_timestamp) AS trans_date  
+    FROM `bigquery-public-data.crypto_bitcoin.transactions`  
+)  
+SELECT COUNT(trans_date) AS transactions, trans_date  
+FROM time  
+GROUP BY trans_date  
+ORDER BY trans_date
+```
+
+&lt;img src="images/sql10.png"&gt;&lt;/img&gt;
+
+---
+
+## Limiting Results with LIMIT
+
+- Sometimes you want to return only part of the results. This can be useful for instance when you run queries on the cloud and you want to preview the results before downloading the entire dataset. LIMIT is used for this purpose. It avoids you pay money for bringing back all the results.
+
+&lt;img src="images/sql11.png" width="80%"&gt;&lt;/img&gt;
+
+---
+
+## GROUP BY – Operations by Category
+
+&gt; **Query:** What is the average no2 pollutant for each city in the US?
+
+.pull-left[
+```sql
+SELECT city, AVG(value) AS avg_value  
+FROM `bigquery-public-data.openaq.global_air_quality`  
+WHERE country = 'US' AND pollutant = 'no2'  
+GROUP BY city
+```
+
+**`GROUP BY city`**:
+   - This groups the results by **city**. For each unique city in the dataset, the query calculates the average NO2 pollutant value based on the rows that belong to that city.
+   - Without `GROUP BY`, the `AVG()` function would calculate the average across all rows in the dataset, rather than for each individual city.
+]
+
+.pull-right[
+&lt;img src="images/sql12.png" width="90%"&gt;&lt;/img&gt;
+]
+
+---
+
+## Filtering Categories with GROUP BY and HAVING
+
+&gt; **Query:** Which cities in India have an average no2 pollutant &gt; 50?
+
+.pull-left[
+```sql
+SELECT city, AVG(value) AS avg_value  
+FROM `bigquery-public-data.openaq.global_air_quality`  
+WHERE country = 'IN' AND pollutant = 'no2'  
+GROUP BY city
+HAVING avg_value &gt; 50
+```
+]
+
+.pull-right[
+&lt;img src="images/sql13.png" width="90%"&gt;&lt;/img&gt;
+]
+
+---
+## Practice Query
+
+
+&gt; **Query:** What is the average time rent per station of bike share program in San Franciso?
+
+*(Look for the San Francisco Bikeshare dataset)*
+
+
+&gt; **Query:** Which day of the week has the most fatal motor accidents in 2020?
+
+*(Look for the NHTSA Traffic Fatalities dataset)*
+
+---
+## Practice Query - Answer from ChatGPT
+
+&gt; **Query:** What is the average time rent per station of bike share program in San Franciso?
+
+.pull-left[
+```sql
+SELECT stations.name AS station_name, 
+       AVG(trips.duration_sec / 60) AS avg_rent_time_minutes
+FROM `bigquery-public-data.san_francisco.bikeshare_trips` AS trips
+JOIN `bigquery-public-data.san_francisco.bikeshare_stations` AS stations
+ON trips.start_station_id = stations.station_id
+GROUP BY station_name
+ORDER BY avg_rent_time_minutes DESC
+```
+- It uses the `JOIN` operation to merge the two tables (we will see `JOIN` in the next slides). We could simply return the station_id instead.
+- It uses the `bigquery-public-data.san_francisco` instead of `bigquery-public-data.san_francisco_bikeshare` dataset.
+]
+.pull-right[
+&lt;img src="images/sql14.png" width="90%"&gt;&lt;/img&gt;
+]
+
+---
+## Practice Query - Answer from ChatGPT
+
+&gt; **Query:** Which day of the week has the most fatal motor accidents in 2020?
+
+.pull-left[
+```sql
+SELECT FORMAT_TIMESTAMP('%A', TIMESTAMP(timestamp_of_crash)) AS day_of_week,
+       COUNT(*) AS total_fatalities
+FROM `bigquery-public-data.nhtsa_traffic_fatalities.accident_2020`
+WHERE EXTRACT(YEAR FROM TIMESTAMP(timestamp_of_crash)) = 2020
+GROUP BY day_of_week
+ORDER BY total_fatalities DESC
+LIMIT 1
+```
+- Error in the dataset. ChatGPT is not able to type the correct dataset name (even after trying to correct the prompt).
+- No need to extract for the year, as the dataset is already filtered for 2020.
+- It imposes a limit of 1, but it is not necessary.
+]
+.pull-right[
+&lt;img src="images/sql15.png" width="90%"&gt;&lt;/img&gt;
+
+
+- It uses more advanced SQL commands such as `FORMAT_TIMESTAMP`, `TIMESTAMP` and `EXTRACT`. These might not always be available in all SQL databases.
+![](images/sql_advanced.png)
+]
+
+---
+
+## SQL Joins
+
+Joins allow merging results from different tables. It is required to specify the "key" linking the tables.
+
+![](images/join_sql.png)
+
+---
+
+## Types of Joins
+- **(INNER) JOIN**: Returns records that have matching values in both tables.
+- **LEFT/RIGHT (OUTER) JOIN**: Returns all records from the left/right table and the matched records from the right/left table.
+- **FULL (OUTER) JOIN**: Returns all records when there is a match in either left or right table.
+
+&lt;img src="lecture13_googlecloud_files/figure-html/venn diagram-1.png" width="35%" height="35%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Example INNER JOIN
+
+&gt; **Query:** Find the top 5 longest bike rides in Austin, including informations about stations.
+
+![](images/austin_bikeshare.png)
+
+Which field name should we use to join the two tables?
+
+
+---
+
+## Example INNER JOIN - option 1
+
+```sql
+SELECT *
+FROM `bigquery-public-data.austin_bikeshare.bikeshare_trips` AS A
+INNER JOIN `bigquery-public-data.austin_bikeshare.bikeshare_stations` AS B  
+ON A.start_station_id = B.station_id  
+ORDER BY duration_minutes DESC  
+LIMIT 5
+```
+&lt;img src="images/sql16.png" width="90%"&gt;&lt;/img&gt;
+
+
+You can simplify the query by using the following syntax:
+```sql
+JOIN `bigquery-public-data.austin_bikeshare.bikeshare_stations` AS B  
+```
+
+
+---
+
+## Example INNER JOIN - option 2
+
+```sql
+SELECT *  
+FROM `bigquery-public-data.austin_bikeshare.bikeshare_trips` AS A,
+     `bigquery-public-data.austin_bikeshare.bikeshare_stations` AS B
+WHERE A.start_station_id = B.station_id  
+ORDER BY duration_sec DESC  
+LIMIT 5 
+```
+&lt;img src="images/sql16.png" width="90%"&gt;&lt;/img&gt;
+
+---
+
+## Practice Query
+
+&gt; **Query:** Which bike start station has the longest duration rides?
+
+
+&gt; **Query:** How many bikes were reported as stolen?
+
+---
+
+## Additional SQL Resources
+
+- [SQL Tutorial (W3Schools)](https://www.w3schools.com/sql/)
+- [Intro to SQL (Kaggle)](https://www.kaggle.com/learn/intro-to-sql)
+- [Advanced SQL (Kaggle)](https://www.kaggle.com/learn/advanced-sql)
+
+![Resources Icon](https://img.icons8.com/ios-glyphs/50/000000/books.png)
+
+---
+
+# Connecting R to BigQuery
+
+To connect R to BigQuery, use the `bigrquery` package:
+
+```r
+# Install the bigrquery package
+install.packages("bigrquery")
+
+# Load the library and authenticate
+library(bigrquery)
+bq_auth()
+
+# Run a query
+query &lt;- "SELECT country, pollutant, value 
+          FROM `bigquery-public-data.openaq.global_air_quality` 
+          WHERE country = 'US'
+          LIMIT 5"
+result &lt;- bq_project_query("your-project-id", query)
+data &lt;- bq_table_download(result)
+head(data)
+```
+
+
+```
+##   country pollutant       value
+## 1      US        no 0.007021218
+## 2      US        bc 0.410000000
+## 3      US        bc 0.500000000
+## 4      US        bc 2.100000000
+## 5      US        bc 0.160000000
+```
+
+
+---
+## Example - Number of Bitcoin Transactions Over time
+
+.pull-left[
+```r
+query &lt;- "WITH time AS (  
+    SELECT DATE(block_timestamp) AS trans_date  
+    FROM `bigquery-public-data.crypto_bitcoin.transactions`  
+)  
+SELECT COUNT(trans_date) AS transactions, trans_date  
+FROM time  
+GROUP BY trans_date  
+ORDER BY trans_date DESC"
+result &lt;- bq_project_query("your-project-id", query)
+data &lt;- bq_table_download(result)
+
+library(ggplot2)
+library(hrbrthemes)
+p &lt;- ggplot(data, aes(x=trans_date, y=transactions)) +
+  geom_line( color="#69b3a2") + 
+  xlab("Time") + ylab("Number of Transactions") +
+  theme_ipsum() +
+  theme(axis.text.x=element_text(angle=60, hjust=1)) +
+  ggtitle("Number of Bitcoin Transactions Over Time")
+p
+```
+]
+
+.pull-right[
+![](lecture13_googlecloud_files/figure-html/unnamed-chunk-1-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# Overview of BigQuery
+
+- **BigQuery** is a highly scalable data warehouse designed to store and analyze terabytes of data using SQL.
+- **Benefits**:
+  - High-speed querying over large datasets.
+  - Scalable storage and computing power.
+  - Integration with public datasets for broader analysis.
+
+---
+
+# Key Features of BigQuery
+
+- **Serverless architecture**: You don't manage infrastructure, it scales automatically.
+- **SQL-based queries**: Standard SQL allows you to extract, transform, and analyze data.
+- **Built-in machine learning**: You can train and deploy machine learning models directly within BigQuery using SQL.
+- **Integration with R**: Use the `bigrquery` package to connect R with BigQuery.
+
+
+---
+
+class: sydney-blue, center, middle
+
+# Vertex AI Workbench
+
+
+---
+
+## Vertex AI Workbench
+
+**Vertex AI Workbench** provides a managed Jupyter notebook environment tailored for machine learning workflows:
+
+- **Supports R and Python**: Work with your preferred language.
+- **Pre-configured environments**: No need to install dependencies manually.
+- **Scalable computing resources**: Access GPUs and TPUs when needed.
+- **Integration with BigQuery**: Fetch data directly from BigQuery and train machine learning models.
+
+![](images/data-science-with-r-on-gcp-eda-flow.png)
+
+---
+
+## Setting up a Vertex AI Workbench
+
+1. Open **Google Cloud Console**.
+2. Navigate to **Vertex AI &gt; Workbench**. Or click on this [link](https://console.cloud.google.com/vertex-ai/workbench).
+3. On the "Instances" tab, click on "Create New".
+4. On the "New instance" window, click "Create". For simplicity, keep everything by default. It may take 2-3 minutes.
+5. Once the instance is ready, click on "Open JupyterLab".
+
+---
+
+## Open JupyterLab and install R
+
+1. In the JupyterLab environment, click on "New Launcher", and then on the Launcher tab, click Terminal.
+2. In the terminal, install R by running the following command:
+```bash
+conda create -n r
+conda activate r
+conda install -c r r-essentials r-base=4.4.1
+```
+This step may take a few minutes. You may to accept the installation by typing `y` and pressing Enter.
+
+---
+
+## Complete the EDA with R and BigQuery walkthrough
+
+1. Once the installation is finished, reopen the Terminal and run the following command to clone AI Vertex samples:
+```bash
+git clone https://github.com/GoogleCloudPlatform/vertex-ai-samples.git
+```
+
+1. Once the samples are cloned, open the `vertex-ai-samples`&gt;`notebooks` &gt;`community`&gt;`exploratory_data_analysis`&gt;`eda_with_r_and_bigquery.ipynb` notebook and complete it.
+
+See the [official documentation](https://cloud.google.com/vertex-ai/docs/workbench/eda-with-r-and-bigquery) for more details.
+
+---
+## What else could be of interest on Google Cloud?
+
+- **Cloud Run**: Deploy and manage containerized applications such as Shiny app (see [this](https://towardsdatascience.com/dockerizing-and-deploying-a-shiny-dashboard-on-google-cloud-a990ceb3c33a) tutorial).
+- **BigQuery ML**: Train machine learning models using SQL.
+- **AI Platform**: Deploy and manage machine learning models.
+- **Dataflow**: Process data in real-time using Apache Beam.
+
+
+---
+
+## Terminology
+
+| Term         | Definition |
+|--------------|------------|
+| **Join**     | Combine tables |
+| **Inner Join** vs **Outer Join** | Types of joins |
+| **Group By** | Aggregate data |
+| **BigQuery** | Cloud-based SQL platform |
+
+
+---
+
+class: sydney-blue, center, middle
+
+# Questions?
+
+.pull-down[
+&lt;a href="https://ptds.samorso.ch/"&gt;
+.white[&lt;svg viewBox="0 0 384 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM332.1 128H256V51.9l76.1 76.1zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288H48z"&gt;&lt;/path&gt;&lt;/svg&gt; website]
+&lt;/a&gt;
+
+&lt;a href="https://github.com/ptds2024/"&gt;
+.white[&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; GitHub]
+&lt;/a&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="assets/remark-zoom.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"highlightSpans": false,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
